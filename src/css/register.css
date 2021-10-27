@@ -1,0 +1,342 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&family=Roboto:wght@300;400;500;700;900&family=Rubik:wght@300;400;500;600;700&display=swap');
+
+:root{
+    --poppin : 'Poppins', sans-serif;
+    --basefont : 'Roboto', sans-serif;
+    --textfont : 'Rubik', sans-serif;
+}
+*{
+    font-family: var(--basefont);
+}
+body{
+    margin: 0;
+    padding: 0;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow-x: hidden;
+}
+
+.login_signup_home{
+    width: 100vw;
+    max-width: 100vw;
+    height: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-image: linear-gradient(to top, #ffffff, #addcff);
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' version='1.1' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:svgjs='http://svgjs.com/svgjs' width='1440' height='560' preserveAspectRatio='none' viewBox='0 0 1440 560'%3e%3cg mask='url(%26quot%3b%23SvgjsMask1002%26quot%3b)' fill='none'%3e%3crect width='1440' height='560' x='0' y='0' fill='rgba(5%2c 33%2c 62%2c 1)'%3e%3c/rect%3e%3cpath d='M554.11 423.16 a150.83 150.83 0 1 0 301.66 0 a150.83 150.83 0 1 0 -301.66 0z' fill='rgba(28%2c 83%2c 142%2c 0.4)' class='triangle-float2'%3e%3c/path%3e%3cpath d='M1028.095%2c494.073C1075.975%2c495.051%2c1125.846%2c481.228%2c1150.945%2c440.442C1177.088%2c397.958%2c1171.424%2c344.36%2c1146.983%2c300.875C1121.996%2c256.418%2c1079.076%2c220.549%2c1028.095%2c221.872C978.845%2c223.15%2c942.691%2c263.348%2c919.433%2c306.779C897.685%2c347.39%2c890.524%2c395.747%2c913.642%2c435.594C936.685%2c475.312%2c982.187%2c493.135%2c1028.095%2c494.073' fill='rgba(28%2c 83%2c 142%2c 0.4)' class='triangle-float2'%3e%3c/path%3e%3cpath d='M252.5 228.38 a107.53 107.53 0 1 0 215.06 0 a107.53 107.53 0 1 0 -215.06 0z' fill='rgba(28%2c 83%2c 142%2c 0.4)' class='triangle-float2'%3e%3c/path%3e%3cpath d='M1089.434%2c746.662C1141.842%2c748.562%2c1194.456%2c729.873%2c1223.064%2c685.922C1254.343%2c637.867%2c1263.721%2c574.308%2c1233.225%2c525.753C1204.132%2c479.432%2c1144.119%2c471.882%2c1089.434%2c473.162C1037.592%2c474.375%2c982.817%2c487.338%2c956.845%2c532.221C930.839%2c577.163%2c944.286%2c632.642%2c971.593%2c676.806C997.331%2c718.434%2c1040.524%2c744.889%2c1089.434%2c746.662' fill='rgba(28%2c 83%2c 142%2c 0.4)' class='triangle-float1'%3e%3c/path%3e%3cpath d='M1031.27 340.52 a172.06 172.06 0 1 0 344.12 0 a172.06 172.06 0 1 0 -344.12 0z' fill='rgba(28%2c 83%2c 142%2c 0.4)' class='triangle-float1'%3e%3c/path%3e%3cpath d='M712.065%2c353.484C760.151%2c352.32%2c810.175%2c336.434%2c832.853%2c294.015C854.602%2c253.333%2c833.956%2c207.152%2c811.981%2c166.591C788.456%2c123.168%2c761.347%2c74.272%2c712.065%2c71.067C658.901%2c67.609%2c613.285%2c105.73%2c586.781%2c151.945C560.423%2c197.905%2c552.73%2c255.123%2c580.702%2c300.12C607.446%2c343.141%2c661.424%2c354.71%2c712.065%2c353.484' fill='rgba(28%2c 83%2c 142%2c 0.4)' class='triangle-float1'%3e%3c/path%3e%3c/g%3e%3cdefs%3e%3cmask id='SvgjsMask1002'%3e%3crect width='1440' height='560' fill='white'%3e%3c/rect%3e%3c/mask%3e%3cstyle%3e %40keyframes float1 %7b 0%25%7btransform: translate(0%2c 0)%7d 50%25%7btransform: translate(-10px%2c 0)%7d 100%25%7btransform: translate(0%2c 0)%7d %7d .triangle-float1 %7b animation: float1 5s infinite%3b %7d %40keyframes float2 %7b 0%25%7btransform: translate(0%2c 0)%7d 50%25%7btransform: translate(-5px%2c -5px)%7d 100%25%7btransform: translate(0%2c 0)%7d %7d .triangle-float2 %7b animation: float2 4s infinite%3b %7d %40keyframes float3 %7b 0%25%7btransform: translate(0%2c 0)%7d 50%25%7btransform: translate(0%2c -10px)%7d 100%25%7btransform: translate(0%2c 0)%7d %7d .triangle-float3 %7b animation: float3 6s infinite%3b %7d %3c/style%3e%3c/defs%3e%3c/svg%3e");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-clip: unset;
+}
+
+.login_signup_box{
+    display: flex;
+    flex-direction: column;
+    min-height: 60vh;
+    max-height: 80vh;
+    width: 40vw;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    text-align: center;
+    position: relative;
+}
+.login_signup_box_head{
+    width: 100%;
+    height: 50px;
+    background-color: #0079d6;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+    position: relative;
+    top: 0;
+}
+
+.login_signup_box_head_img{
+    position: absolute;
+    left: 10px;
+    width: 50px;
+    height: 50px;
+}
+.login_signup_box_head_text{
+    color: white;
+    font-family: var(--poppin);
+    font-weight: 600;
+}
+
+.login_signup_box_foot{
+    bottom: 0;
+    width: 100%;
+    min-height: 44px;
+    padding: 3px 0;
+    max-height: fit-content;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    background-color: #0079d6;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.login_signup_box_foot_text{
+    font-size: 18px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: 0;
+    padding: 0;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-family: var(--poppin);
+    font-weight: 600;
+    color: white;
+}
+.login_signup_box__foot_register{
+    margin: 0;
+    padding: 0;
+    margin-left: 10px;
+    font-size: 15px;
+    color: rgb(0, 0, 0);
+    cursor: pointer;
+    transition: all linear 200ms;
+    padding: 1px 0;
+}
+.login_signup_box__foot_register:hover{
+    color: rgb(36, 36, 36);
+}
+/* for code form */
+#code{
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    min-height: 50vh;
+    max-height: fit-content;
+    padding: 10px 0;
+    position: relative;
+    background-color: white;
+}
+#code h3{
+    font-family: var(--textfont);
+}
+#code input{
+    border: none;
+    outline: none;
+    height: 30px;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
+    width: 40%;
+    font-size: 20px;
+    background-color: rgb(218, 218, 218);
+    color: black;
+    margin-top: 4px;
+    margin: 10px 0;
+    font-size: 16px;
+    font-family: var(--poppin);
+    border-radius: 3px;
+}
+#code button{
+    width: 40%;
+    height: 30px;
+    font-size: 18px;
+    color: white;
+    background-color: #0085eb;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    transition: all 100ms ease;
+    margin-top: 5px;
+    font-family: var(--poppin);
+    border-radius: 3px;
+}
+
+/* alert box */
+
+.alert {
+    opacity: 1;
+    position: fixed;
+    top: 5px;
+    right: 5px;
+    padding: 20px;
+    background-color: #90ee90;
+    color: rgb(248, 248, 248);
+    transition: opacity 0.6s;
+}
+
+.closebtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.closebtn:hover {
+    color: black;
+}
+
+
+
+.login_signup_box_select{
+    width: 100%;
+    min-height: 50vh;
+    max-height: fit-content;
+    padding: 10px 0;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+}
+.username{
+    width: 100%;
+    height: fit-content;
+    margin-bottom: 10px;
+    position: relative;
+}
+.username h4{
+    margin: 0;
+    padding: 0;
+    font-family: var(--basefont);
+    font-size: 16px;
+    color: rgba(43, 43, 43, 0.856);
+    font-weight: 400;
+}
+.password{
+    width: 100%;
+    height: fit-content;
+    margin-top: 10px;
+}
+.password h4{
+    margin: 0;
+    padding: 0;
+    font-family:var(--basefont);
+    font-size: 16px;
+    color: rgba(43, 43, 43, 0.856);
+    font-weight: 400;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.password h4 input{
+    width: fit-content;
+    height: 16px;
+    margin-left: 4px;
+    width: 16px;
+}
+.password input{
+    border: none;
+    outline: none;
+    height: 30px;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
+    width: 40%;
+    font-size: 16px;
+    background-color: rgb(218, 218, 218);
+    color: black;
+    margin-top: 4px;
+    font-family: var(--poppin);
+    border-radius: 3px;
+}
+.username input{
+    border: none;
+    outline: none;
+    height: 30px;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
+    width: 40%;
+    font-size: 16px;
+    background-color: white;
+    background-color: rgb(218, 218, 218);
+    color: black;
+    margin-top: 4px;
+    font-family: var(--poppin);
+    border-radius: 3px;
+}
+.button{
+    width: 100%;
+    height: fit-content;
+    margin-top: 20px;
+}
+.button button{
+    width: 40%;
+    height: 30px;
+    font-size: 18px;
+    color: white;
+    background-color: #0085eb;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    transition: all 100ms ease;
+    border-radius: 3px;
+}
+.button button:hover{
+    background-color: #0085eb98;
+}
+.button input{
+    width: 40%;
+    height: 30px;
+    font-size: 18px;
+    color: white;
+    background-color: #0085eb;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    transition: all 100ms ease;
+    border-radius: 3px;
+}
+.button input:hover{
+    background-color: #0085eb98;
+}
+
+#code{
+    display: none;
+}
+#actualcode_input{
+    display: none;
+}
+
+@media only screen and (max-width: 1200px) {
+    .login_signup_box{
+        width: 55vw;
+    }
+    .username input{
+        width: 50%;
+    }
+    .password input{
+        width: 50%;
+    }
+    .button button{
+        width: 50%;
+    }
+}
+@media only screen and (max-width: 600px){
+    .login_signup_box{
+        width: 70vw;
+    }
+    .username input{
+        width: 70%;
+    }
+    .password input{
+        width: 70%;
+    }
+    .button button{
+        width: 70%;
+    }
+}

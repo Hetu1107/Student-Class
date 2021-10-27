@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=PT+Serif&display=swap');
+.classroom-home-page{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    min-height: 100vh;
+    max-height: fit-content;
+    width: 100vw;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' version='1.1' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:svgjs='http://svgjs.com/svgjs' width='1440' height='1440' preserveAspectRatio='none' viewBox='0 0 1440 1440'%3e%3cg mask='url(%26quot%3b%23SvgjsMask1027%26quot%3b)' fill='none'%3e%3crect width='1440' height='1440' x='0' y='0' fill='%230e2a47'%3e%3c/rect%3e%3cpath d='M28 1440L1468 0L1778.5 0L338.5 1440z' fill='url(%23SvgjsLinearGradient1028)'%3e%3c/path%3e%3cpath d='M1417 1440L-23 0L-797 0L643 1440z' fill='url(%23SvgjsLinearGradient1029)'%3e%3c/path%3e%3cpath d='M584.2137639261314 1440L1440 584.2137639261314L1440 1440z' fill='url(%23SvgjsLinearGradient1028)'%3e%3c/path%3e%3cpath d='M0 1440L855.7862360738686 1440L 0 584.2137639261314z' fill='url(%23SvgjsLinearGradient1029)'%3e%3c/path%3e%3c/g%3e%3cdefs%3e%3cmask id='SvgjsMask1027'%3e%3crect width='1440' height='1440' fill='white'%3e%3c/rect%3e%3c/mask%3e%3clinearGradient x1='0%25' y1='100%25' x2='100%25' y2='0%25' id='SvgjsLinearGradient1028'%3e%3cstop stop-color='rgba(15%2c 70%2c 185%2c 0.2)' offset='0'%3e%3c/stop%3e%3cstop stop-opacity='0' stop-color='rgba(15%2c 70%2c 185%2c 0.2)' offset='0.66'%3e%3c/stop%3e%3c/linearGradient%3e%3clinearGradient x1='100%25' y1='100%25' x2='0%25' y2='0%25' id='SvgjsLinearGradient1029'%3e%3cstop stop-color='rgba(15%2c 70%2c 185%2c 0.2)' offset='0'%3e%3c/stop%3e%3cstop stop-opacity='0' stop-color='rgba(15%2c 70%2c 185%2c 0.2)' offset='0.66'%3e%3c/stop%3e%3c/linearGradient%3e%3c/defs%3e%3c/svg%3e");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-clip: unset;
+    overflow: hidden;
+}
+
+.classroom-home-page-main-div{
+    width: 100vw;
+    max-width: 100vw;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
+    height: 90vh;
+    position: absolute;
+    top: 60px;
+}
+.classroom-home-page-main-div-head{
+    width: 100vw;
+    height: 10vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-bottom: 2px solid black;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' version='1.1' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:svgjs='http://svgjs.com/svgjs' width='1440' height='560' preserveAspectRatio='none' viewBox='0 0 1440 560'%3e%3cg mask='url(%26quot%3b%23SvgjsMask1550%26quot%3b)' fill='none'%3e%3crect width='1440' height='560' x='0' y='0' fill='url(%23SvgjsLinearGradient1551)'%3e%3c/rect%3e%3cpath d='M1440 0L822.85 0L1440 194.63z' fill='rgba(255%2c 255%2c 255%2c .1)'%3e%3c/path%3e%3cpath d='M822.85 0L1440 194.63L1440 307.1L653.39 0z' fill='rgba(255%2c 255%2c 255%2c .075)'%3e%3c/path%3e%3cpath d='M653.39 0L1440 307.1L1440 401.48L525.84 0z' fill='rgba(255%2c 255%2c 255%2c .05)'%3e%3c/path%3e%3cpath d='M525.84 0L1440 401.48L1440 449.86L391.53000000000003 0z' fill='rgba(255%2c 255%2c 255%2c .025)'%3e%3c/path%3e%3cpath d='M0 560L683.67 560L0 425.22z' fill='rgba(0%2c 0%2c 0%2c .1)'%3e%3c/path%3e%3cpath d='M0 425.22L683.67 560L879.88 560L0 259.85z' fill='rgba(0%2c 0%2c 0%2c .075)'%3e%3c/path%3e%3cpath d='M0 259.85L879.88 560L1089.23 560L0 211.72000000000003z' fill='rgba(0%2c 0%2c 0%2c .05)'%3e%3c/path%3e%3cpath d='M0 211.72000000000003L1089.23 560L1101.84 560L0 204.65000000000003z' fill='rgba(0%2c 0%2c 0%2c .025)'%3e%3c/path%3e%3c/g%3e%3cdefs%3e%3cmask id='SvgjsMask1550'%3e%3crect width='1440' height='560' fill='white'%3e%3c/rect%3e%3c/mask%3e%3clinearGradient x1='15.28%25' y1='-39.29%25' x2='84.72%25' y2='139.29%25' gradientUnits='userSpaceOnUse' id='SvgjsLinearGradient1551'%3e%3cstop stop-color='rgba(0%2c 0%2c 0%2c 1)' offset='0'%3e%3c/stop%3e%3cstop stop-color='rgba(14%2c 42%2c 71%2c 1)' offset='1'%3e%3c/stop%3e%3c/linearGradient%3e%3c/defs%3e%3c/svg%3e");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-clip: unset;
+    overflow: hidden;
+    box-shadow: -1px 7px 6px -1px rgba(0,0,0,0.47);
+-webkit-box-shadow: -1px 7px 6px -1px rgba(0,0,0,0.47);
+-moz-box-shadow: -1px 7px 6px -1px rgba(0,0,0,0.47);
+}
+.classroom-home-page-main-div-head h2{
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 28px;
+    color: rgb(255, 255, 255);
+}
+.classroom-home-page-main-div-middle{
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
+    height: 80vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    width: 100vw;
+}
+.classroom-home-page-main-div-middle-box{
+    display: flex;
+    width: 95%;
+    height: 150px;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin: 10px 0;
+    border-radius: 5px;
+    transition: all 200ms ease-in-out;
+    cursor: pointer;
+    position: relative;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+}
+.classroom-home-page-main-div-middle-box:nth-child(1){
+    margin-top: 20px;
+}
+.classroom-home-page-main-div-middle-box:hover{
+    opacity: 0.5;
+}
+.classroom-home-page-main-div-middle-box h2{
+    position: absolute;
+    bottom: 5px;
+    left: 5px;
+    margin: 0;
+    padding: 0;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+}
