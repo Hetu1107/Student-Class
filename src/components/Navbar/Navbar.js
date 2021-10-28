@@ -1,13 +1,28 @@
 import React, { useEffect, useState } from "react";
 import Loader from "../Loader/Loader";
-import People from "./People";
 import "../../css/Nav.css";
 import UserInfo from "./UserInfo";
 import db, { storage } from "../firebase";
 import { withRouter } from "react-router-dom";
-import { OverlayTrigger, Tooltip, Modal, Button, Form ,Nav,Container,NavDropdown,Navbar } from "react-bootstrap";
+import {
+  OverlayTrigger,
+  Tooltip,
+  Modal,
+  Button,
+  Form,
+  Nav,
+  Container,
+  NavDropdown,
+  Navbar,
+  ListGroup,
+  ListGroupItem,
+} from "react-bootstrap";
+import { findAllByTestId } from "@testing-library/react";
 
+let first = 1;
 function NavBar(props) {
+  const [allPeople, setAllPeople] = useState([]);
+
   const [showPeople, setShowPeople] = useState(false);
   const [avatar, setAvatar] = useState();
   const [src, setSrc] = useState("");
@@ -17,6 +32,34 @@ function NavBar(props) {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  // for people
+  const handleClosePeople = () => {
+    setShowPeople(false);
+  };
+  const handleShowPeople = () => setShowPeople(true);
+  useEffect(async () => {
+    props.loadiing(true);
+    await new Promise(function (resolve, reject) {
+      resolve(
+        db
+          .collection("batch")
+          .doc("96NHjCZ6N4Xffxoi3FgW")
+          .collection("user")
+          .onSnapshot((snap) => {
+            snap.docs.map((doc) => {
+              const people = {
+                avtar: doc.data().url,
+                username: doc.data().username,
+              };
+              setAllPeople((allPeople) => [...allPeople, people]);
+              setTimeout(() => props.loadiing(false), 2000);
+            });
+          })
+      );
+    });
+  }, []);
+
   useEffect(() => {
     if (userId) {
       db.collection("batch")
@@ -102,26 +145,12 @@ function NavBar(props) {
   };
 
   // people box function
-  const PeopleBox = () => {
-    if (showPeople) {
-      return <People email={props.email} check={setShowPeople} />;
-    } else {
-      return null;
-    }
-  };
 
   return (
-    <Navbar collapseOnSelect  bg="dark" variant="dark" fixed="top" id="navbar">
-        <UserInfo email={props.email} lodiing={props.loadiing}/>
-        {
-          PeopleBox()
-        }
+    <Navbar collapseOnSelect bg="dark" variant="dark" fixed="top" id="navbar">
+      <UserInfo email={props.email} lodiing={props.loadiing} />
       <Container>
         <Navbar.Brand id="left_nav">
-          <OverlayTrigger
-            placement="right"
-            overlay={<Tooltip id="button-tooltip">Profile</Tooltip>}
-          >
             <div className="navbar-profile-box">
               <img src={user.avtar} onClick={handleShow} alt={""} />
               <h4 onClick={handleShow}>{user.username}</h4>
@@ -162,20 +191,55 @@ function NavBar(props) {
                   </Button>
                 </Modal.Footer>
               </Modal>
+              <Modal
+                show={showPeople}
+                onHide={handleClosePeople}
+                backdrop="static"
+                keyboard={false}
+                centered
+              >
+                <Modal.Header>
+                  <Modal.Title>People</Modal.Title>
+                  <button
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                    onClick={handleClosePeople}
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </Modal.Header>
+                <Modal.Body id="people_list_body">
+                  <ListGroup id="people_list_list" as="ol" numbered>
+                    {allPeople.map((res) => {
+                      if (res.username.trim() != "") {
+                        return (
+                          <ListGroup.Item
+                            as="li"
+                            className="d-flex justify-content-between align-items-start"
+                          >
+                            <div className="ms-2 me-auto">
+                              <div className="fw-bold">{res.username}</div>
+                            </div>
+                          </ListGroup.Item>
+                        );
+                      }
+                    })}
+                  </ListGroup>
+                </Modal.Body>
+              </Modal>
             </div>
-          </OverlayTrigger>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav id="right_nav">
-            <Nav.Link onClick={()=>setShowPeople(true)}>
-              <h4
-                
-              >
+            <Nav.Link onClick={handleShowPeople} className="icons">
+              <h4>
                 <i className="fas fa-user-friends" />
               </h4>
             </Nav.Link>
-            <Nav.Link>
+            <Nav.Link className="icons">
               <h4 id="navbar-right-corner-home">
                 <i className="fas fa-home" />
               </h4>
