@@ -37,7 +37,7 @@ export async function newAnnouncement(e, fileUrl) {
   });
 }
 
-const post = async (title, message, username, url, subject) => {
+const post = async (title, message, username, url, subject, batchName) => {
   const docRef = await db
     .collection("batch")
     .doc("pciH9dYco14ZdT8EghcX")
@@ -49,6 +49,7 @@ const post = async (title, message, username, url, subject) => {
       url: url,
       subject: subject,
       timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      batchName: batchName,
     });
 
   // console.log(docRef);

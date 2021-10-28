@@ -27,19 +27,18 @@ function Signup(props) {
   const sendEmail = async (e) => {
     e.preventDefault();
     let flag = 1;
-    const data  = await new Promise(function(resolve,reject){
+    const data = await new Promise(function (resolve, reject) {
       db.collection("signin").onSnapshot((snap) => {
-            snap.docs.map((doc) => {
-              if (doc.data().email == email) {
-                flag = 0;
-                resolve(true)
-              }
-              else{
-                resolve(true);
-              }
-            });
-          })
-    }).then(()=>{
+        snap.docs.map((doc) => {
+          if (doc.data().email == email) {
+            flag = 0;
+            resolve(true);
+          } else {
+            resolve(true);
+          }
+        });
+      });
+    }).then(() => {
       if (flag == 0) {
         window.alert("Account already registered with this email id.");
       } else {
@@ -55,6 +54,8 @@ function Signup(props) {
             (result) => {
               setTimeout(() => {}, 3000);
               console.log(result.text);
+              localStorage.removeItem("email");
+              localStorage.removeItem("token");
               document.getElementById("signup").style.display = "none";
               document.getElementById("code").style.display = "flex";
               setload(false);
@@ -66,10 +67,10 @@ function Signup(props) {
         // document.getElementById("signup").style.display = "none";
         // document.getElementById("code").style.display = "flex";
       }
-    })
+    });
   };
   const codeCheck = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     const actualCode = props.cod;
 
     if (code.toString() === actualCode.toString()) {
@@ -182,7 +183,7 @@ function Signup(props) {
       <form
         className="enter_verification_code"
         id="code"
-        onSubmit={(e)=>codeCheck(e)}
+        onSubmit={(e) => codeCheck(e)}
       >
         <h3>Check your mail and confirm code here !</h3>
         <input

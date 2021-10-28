@@ -97,10 +97,17 @@ function Main(props) {
                 title: doc.data().title,
                 subject: doc.data().subject,
                 timestamp: doc.data().timestamp,
+                batchName: doc.data().batchName,
               };
               finalData.push(classData);
             });
-            setMaindata(finalData);
+            // setMaindata(finalData);
+            setMaindata(
+              finalData.filter(
+                (item) => item.batchName == props.location.state.batchName
+              )
+            );
+            console.log(finalData);
             setload(false);
           })
       );
@@ -128,7 +135,6 @@ function Main(props) {
         let splitName = fileName.split(".");
         fileName = splitName[0].substring(0, 13) + "... ." + splitName[1];
       }
-
       setuploadedfiles([...uploadedFiles, fileName]);
     }
     console.log(uploadedFiles);
@@ -201,14 +207,21 @@ function Main(props) {
               <button onClick={() => setAnnounce(false)}>Cancel</button>
               <button
                 onClick={() => {
-                  post(
-                    title,
-                    message,
-                    props.location.state.userDetails.username,
-                    allUrl,
-                    dropItem
-                  );
-                  setAnnounce(false);
+                  if (message && title && dropItem) {
+                    post(
+                      title,
+                      message,
+                      props.location.state.userDetails.username,
+                      allUrl,
+                      dropItem,
+                      props.location.state.batchName
+                    );
+                    setAnnounce(false);
+                  } else {
+                    window.alert(
+                      "Please make sure you have filled Subject,Topic,Message"
+                    );
+                  }
                 }}
               >
                 Post
