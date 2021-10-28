@@ -37,6 +37,12 @@ function NavBar(props) {
   const handleClosePeople = () => {
     setShowPeople(false);
   };
+
+  const logout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("email");
+    props.history.push("/");
+  };
   const handleShowPeople = () => setShowPeople(true);
   useEffect(async () => {
     props.loadiing(true);
@@ -44,17 +50,11 @@ function NavBar(props) {
       resolve(
         db
           .collection("batch")
-          .doc("96NHjCZ6N4Xffxoi3FgW")
+          .doc("pciH9dYco14ZdT8EghcX")
           .collection("user")
           .onSnapshot((snap) => {
-            snap.docs.map((doc) => {
-              const people = {
-                avtar: doc.data().url,
-                username: doc.data().username,
-              };
-              setAllPeople((allPeople) => [...allPeople, people]);
-              setTimeout(() => props.loadiing(false), 2000);
-            });
+            setAllPeople(snap.docs.map((doc) => doc.data()));
+            setTimeout(() => props.loadiing(false), 2000);
           })
       );
     });
@@ -63,7 +63,7 @@ function NavBar(props) {
   useEffect(() => {
     if (userId) {
       db.collection("batch")
-        .doc("96NHjCZ6N4Xffxoi3FgW")
+        .doc("pciH9dYco14ZdT8EghcX")
         .collection("user")
         .doc(userId)
         .update({
@@ -105,7 +105,7 @@ function NavBar(props) {
                 .then((url) => {
                   setSrc(url);
                   db.collection("batch")
-                    .doc("96NHjCZ6N4Xffxoi3FgW")
+                    .doc("pciH9dYco14ZdT8EghcX")
                     .collection("user")
                     .onSnapshot((snap) => {
                       snap.docs.map((doc) => {
@@ -151,85 +151,82 @@ function NavBar(props) {
       <UserInfo email={props.email} lodiing={props.loadiing} />
       <Container>
         <Navbar.Brand id="left_nav">
-            <div className="navbar-profile-box">
-              <img src={user.avtar} onClick={handleShow} alt={""} />
-              <h4 onClick={handleShow}>{user.username}</h4>
-              <Modal show={show} onHide={handleClose} centered>
-                <Modal.Header>
-                  <Modal.Title>Hello {user.username}</Modal.Title>
-                  <button
-                    type="button"
-                    class="close"
-                    aria-label="Close"
-                    onClick={handleClose}
-                  >
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </Modal.Header>
-                <Modal.Body>
-                  <div className="modalbody_profile">
-                    <Form.Group className="position-relative mb-3">
-                      <Form.Label>Change profile image</Form.Label>
-                      <Form.Control
-                        type="file"
-                        required
-                        name="file"
-                        onChange={handlebar}
-                      />
-                    </Form.Group>
-                  </div>
-                </Modal.Body>
-                <Modal.Footer>
-                  <Button
-                    onClick={() => props.history.push("/")}
-                    variant="danger"
-                  >
-                    Log-Out
-                  </Button>
-                  <Button variant="primary" onClick={handleClose}>
-                    Save
-                  </Button>
-                </Modal.Footer>
-              </Modal>
-              <Modal
-                show={showPeople}
-                onHide={handleClosePeople}
-                backdrop="static"
-                keyboard={false}
-                centered
-              >
-                <Modal.Header>
-                  <Modal.Title>People</Modal.Title>
-                  <button
-                    type="button"
-                    class="close"
-                    data-dismiss="modal"
-                    aria-label="Close"
-                    onClick={handleClosePeople}
-                  >
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </Modal.Header>
-                <Modal.Body id="people_list_body">
-                  <ListGroup id="people_list_list" as="ol" numbered>
-                    {allPeople.map((res) => {
-                      if (res.username.trim() != "") {
-                        return (
-                          <ListGroup.Item
-                            as="li"
-                            className="d-flex justify-content-between align-items-start"
-                          >
-                            <div className="ms-2 me-auto">
-                              <div className="fw-bold">{res.username}</div>
-                            </div>
-                          </ListGroup.Item>
-                        );
-                      }
-                    })}
-                  </ListGroup>
-                </Modal.Body>
-              </Modal>
-            </div>
+          <div className="navbar-profile-box">
+            <img src={user.avtar} onClick={handleShow} alt={""} />
+            <h4 onClick={handleShow}>{user.username}</h4>
+            <Modal show={show} onHide={handleClose} centered>
+              <Modal.Header>
+                <Modal.Title>Hello {user.username}</Modal.Title>
+                <button
+                  type="button"
+                  class="close"
+                  aria-label="Close"
+                  onClick={handleClose}
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </Modal.Header>
+              <Modal.Body>
+                <div className="modalbody_profile">
+                  <Form.Group className="position-relative mb-3">
+                    <Form.Label>Change profile image</Form.Label>
+                    <Form.Control
+                      type="file"
+                      required
+                      name="file"
+                      onChange={handlebar}
+                    />
+                  </Form.Group>
+                </div>
+              </Modal.Body>
+              <Modal.Footer>
+                <Button onClick={logout} variant="danger">
+                  Log-Out
+                </Button>
+                <Button variant="primary" onClick={handleClose}>
+                  Save
+                </Button>
+              </Modal.Footer>
+            </Modal>
+            <Modal
+              show={showPeople}
+              onHide={handleClosePeople}
+              backdrop="static"
+              keyboard={false}
+              centered
+            >
+              <Modal.Header>
+                <Modal.Title>People</Modal.Title>
+                <button
+                  type="button"
+                  class="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                  onClick={handleClosePeople}
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </Modal.Header>
+              <Modal.Body id="people_list_body">
+                <ListGroup id="people_list_list" as="ol" numbered>
+                  {allPeople.map((res) => {
+                    if (res.username.trim() != "") {
+                      return (
+                        <ListGroup.Item
+                          as="li"
+                          className="d-flex justify-content-between align-items-start"
+                        >
+                          <div className="ms-2 me-auto">
+                            <div className="fw-bold">{res.username}</div>
+                          </div>
+                        </ListGroup.Item>
+                      );
+                    }
+                  })}
+                </ListGroup>
+              </Modal.Body>
+            </Modal>
+          </div>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">

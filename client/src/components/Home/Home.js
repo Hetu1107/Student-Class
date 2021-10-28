@@ -4,6 +4,8 @@ import "../../css/home.css";
 import Loader from "../Loader/Loader";
 import db from "../firebase";
 import { withRouter } from "react-router-dom";
+import Auth from "../Protected/auth";
+import axios from "axios";
 
 const data = [
   {
@@ -39,83 +41,103 @@ function Home(props) {
     }
   };
 
+  const userAuthnticated = () => {
+    axios
+      .get("/isUserAuth", {
+        headers: {
+          "x-access-token": localStorage.getItem("token"),
+        },
+      })
+      .then((response) => {
+        console.log(response);
+        if (!response.data.auth) {
+          props.history.push("/");
+        } else {
+        }
+      });
+  };
+
+  useEffect(() => {
+    userAuthnticated();
+  }, []);
+
   const redirect = (res) => {
-    props.history.push({
-      pathname: "/main",
-      state: {
-        batchName: res.batchName,
-        userDetails: userDetails,
-        id: id,
-        src: res.src,
-        email: email,
-      },
+    Auth.login(() => {
+      props.history.push({
+        pathname: "/main",
+        state: {
+          batchName: res.batchName,
+          userDetails: userDetails,
+          id: id,
+          src: res.src,
+          email: email,
+        },
+      });
     });
+
     console.log(imageUrl);
     console.log(res.batchName);
   };
 
   useEffect(() => {
-    if (props.location.state.signup) {
-      setEmail(props.location.state.signup);
+    if (props.location.state?.signup) {
+      setEmail(props.location?.state?.signup);
     } else {
-      setEmail(props.location.state.login);
+      setEmail(props.location.state?.login);
       document.getElementById("home-page-user-info").style.display = "none";
     }
   }, []);
 
-  useEffect(async() => {
-      setload(true);
+  useEffect(async () => {
+    setload(true);
     await new Promise(function (resolve, reject) {
-        let docId;
-        let batch = 2024;
-        resolve(
-            
-           db.collection("batch").onSnapshot((snap) => {
-              snap.docs.map((doc) => {
-                if (doc.data().number === batch) {
-                  docId = doc.id;
-                  setId(docId);
-                  console.log(doc.data().number);
-                  console.log(id);
-                  setload(false);
-                }
-              })
-
-            })
-        )
+      let docId;
+      let batch = 2024;
+      resolve(
+        db.collection("batch").onSnapshot((snap) => {
+          snap.docs.map((doc) => {
+            if (doc.data().number === batch) {
+              docId = doc.id;
+              setId(docId);
+              console.log(doc.data().number);
+              console.log(id);
+              setload(false);
+            }
+          });
+        })
+      );
     });
   }, [email]);
 
-  useEffect(async() => {
-      setload(true);
+  useEffect(async () => {
+    setload(true);
     await new Promise(function (resolve, reject) {
-        resolve(
-            db.collection("batch")
-            .doc(id)
-            .collection("user")
-            .onSnapshot((snap) => {
-              setUsers(snap.docs.map((doc) => doc.data().username));
-              snap.docs.map((doc) => {
-                if (doc.data().email === email) {
-                  console.log(email);
-                  setUserDetails(doc.data());
-                  console.log(doc.data().username);
-                  setImageUrl(doc.data().url);
-                }
-              });
-              console.log(users);
-              setload(false);
-            })
-        )
+      resolve(
+        db
+          .collection("batch")
+          .doc(id)
+          .collection("user")
+          .onSnapshot((snap) => {
+            setUsers(snap.docs.map((doc) => doc.data().username));
+            snap.docs.map((doc) => {
+              if (doc.data().email === email) {
+                console.log(email);
+                setUserDetails(doc.data());
+                console.log(doc.data().username);
+                setImageUrl(doc.data().url);
+              }
+            });
+            console.log(users);
+            setload(false);
+          })
+      );
     });
   }, [id]);
 
   return (
     <div className="classroom-home-page" id="classroom-home-page">
-    {
-        loading()
-    }
-      <NavBar userDetails={userDetails} email={email} loadiing = {setload}/>
+      {loading()}
+      <NavBar userDetails={userDetails} email={email} loadiing={setload} />
       <div className="classroom-home-page-main-div">
         <div className="classroom-home-page-main-div-head">
           <h2>Student Classroom</h2>

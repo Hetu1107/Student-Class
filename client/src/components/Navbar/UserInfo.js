@@ -12,7 +12,7 @@ function UserInfo(props) {
       resolve(
         db
           .collection("batch")
-          .doc("96NHjCZ6N4Xffxoi3FgW")
+          .doc("pciH9dYco14ZdT8EghcX")
           .collection("user")
           .onSnapshot((snap) => {
             snap.docs.map((doc) => {
@@ -29,18 +29,18 @@ function UserInfo(props) {
           })
       );
     });
-  });
+  }, []);
 
   const save = () => {
     document.getElementById("home-page-user-info").style.display = "none";
     db.collection("batch")
-      .doc("96NHjCZ6N4Xffxoi3FgW")
+      .doc("pciH9dYco14ZdT8EghcX")
       .collection("user")
       .onSnapshot((snap) => {
         snap.docs.map((doc) => {
           if (doc.data().email === props.email) {
             db.collection("batch")
-              .doc("96NHjCZ6N4Xffxoi3FgW")
+              .doc("pciH9dYco14ZdT8EghcX")
               .collection("user")
               .doc(doc.id)
               .update({
@@ -54,7 +54,7 @@ function UserInfo(props) {
                 console.log(err);
               });
             db.collection("batch")
-              .doc("96NHjCZ6N4Xffxoi3FgW")
+              .doc("pciH9dYco14ZdT8EghcX")
               .collection("user")
               .doc(doc.id)
               .update({
@@ -66,7 +66,7 @@ function UserInfo(props) {
   };
 
   const changeUrl = async (e) => {
-      props.lodiing(true);
+    props.lodiing(true);
     const file = e.target.files[0];
     if (file) {
       document.getElementById("blah").src = URL.createObjectURL(file);
@@ -98,12 +98,12 @@ function UserInfo(props) {
                   props.lodiing(false);
                 })
                 .catch((err) => {
-                    props.lodiing(true);
-                    console.log(err)
+                  props.lodiing(true);
+                  console.log(err);
                 });
             }
           )
-          );
+        );
       });
     }
   };
