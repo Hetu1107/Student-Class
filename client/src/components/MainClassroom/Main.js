@@ -6,6 +6,8 @@ import db from "../firebase";
 import loadimg from "../../assets/images/load.gif";
 import Loader from "../Loader/Loader";
 import { Dropdown, Form, Button, FormControl } from "react-bootstrap";
+import axios from "axios";
+import Auth from "../Protected/auth";
 
 let docurl = "#";
 
@@ -42,23 +44,46 @@ function Main(props) {
     }
   };
 
+  const userAuthnticated = () => {
+    axios
+      .get("/isUserAuth", {
+        headers: {
+          "x-access-token": localStorage.getItem("token"),
+        },
+      })
+      .then((response) => {
+        console.log(response);
+        if (!response.data.auth) {
+          props.history.push("/");
+        } else {
+        }
+      });
+  };
+
+  useEffect(() => {
+    userAuthnticated();
+  }, []);
+
   const redirect = (res) => {
-    props.history.push({
-      pathname: "/announcement",
-      state: {
-        res,
-        email: props.location.state.email,
-        userDetails: props.location.state.userDetails,
-      },
+    Auth.login(() => {
+      props.history.push({
+        pathname: "/announcement",
+        state: {
+          res,
+          email: props.location.state.email,
+          userDetails: props.location.state.userDetails,
+        },
+      });
     });
   };
+
   useEffect(async () => {
     setload(true);
     await new Promise(function (resolve, reject) {
       resolve(
         db
           .collection("batch")
-          .doc("96NHjCZ6N4Xffxoi3FgW")
+          .doc("pciH9dYco14ZdT8EghcX")
           .collection("post")
           .orderBy("timestamp", "desc")
           .onSnapshot((snap) => {
@@ -196,7 +221,7 @@ function Main(props) {
       return (
         <div className="announce-box-before" onClick={() => setAnnounce(true)}>
           {/* put here avtar image  */}
-          <img src={props.location.state.userDetails.url} />
+          <img src={props.location.state?.userDetails.url} />
           <h4>New Announcement...</h4>
         </div>
       );
@@ -208,12 +233,12 @@ function Main(props) {
       {loading()}
       <div
         className="classroom-home-page-main-div-middle-box"
-        style={{ backgroundImage: `url(${props.location.state.src})` }}
+        style={{ backgroundImage: `url(${props.location.state?.src})` }}
       >
         <h3>
           <i class="fas fa-arrow-left" onClick={() => window.history.back()} />
         </h3>
-        <h2>{props.location.state.batchName}</h2>
+        <h2>{props.location.state?.batchName}</h2>
       </div>
       <div className="batch-main-page-middle">
         <div className="batch-main-page-middle-announce-box">
