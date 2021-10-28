@@ -4,7 +4,7 @@ import { withRouter } from "react-router-dom";
 import db from "../firebase";
 import emailjs from "emailjs-com";
 import Loader from "../Loader/Loader";
-import axios from "axios"
+import axios from "axios";
 
 function Signup(props) {
   const [email, setemail] = useState("");
@@ -13,6 +13,7 @@ function Signup(props) {
   const [code, setCode] = useState();
   const [load, setload] = useState(false);
   const [id, setId] = useState();
+  const [flag, setFlag] = useState(0);
 
   const form = useRef();
   const loading = () => {
@@ -22,28 +23,44 @@ function Signup(props) {
       return <h1></h1>;
     }
   };
+
   const sendEmail = async (e) => {
     e.preventDefault();
-    setload(true);
-    await emailjs
-      .sendForm(
-        "service_2ryuebd",
-        "template_jgkssph",
-        form.current,
-        "user_ltxCptfH43Pg32et8yUrw"
-      )
-      .then(
-        (result) => {
-          setTimeout(() => {}, 3000);
-          console.log(result.text);
-        },
-        (error) => {
-          console.log(error.text);
+    let flag = 0;
+    db.collection("signin").onSnapshot((snap) => {
+      snap.docs.map((doc) => {
+        if (doc.data().email == email) {
+          flag = 1;
         }
-      );
-    setload(false);
-    document.getElementById("signup").style.display = "none";
-    document.getElementById("code").style.display = "flex";
+      });
+    });
+    if (flag == 0) {
+      window.alert("Account already registered with this email id.");
+    } else {
+      alert(flag);
+      setload(true);
+      await emailjs
+        .sendForm(
+          "service_2ryuebd",
+          "template_jgkssph",
+          form.current,
+          "user_ltxCptfH43Pg32et8yUrw"
+        )
+        .then(
+          (result) => {
+            setTimeout(() => {}, 3000);
+            console.log(result.text);
+            document.getElementById("signup").style.display = "none";
+            document.getElementById("code").style.display = "flex";
+          },
+          (error) => {
+            console.log(error.text);
+          }
+        );
+      setload(false);
+      // document.getElementById("signup").style.display = "none";
+      // document.getElementById("code").style.display = "flex";
+    }
   };
   const codeCheck = () => {
     const actualCode = props.cod;
@@ -130,6 +147,7 @@ function Signup(props) {
           />
           <input
             type="email"
+            value={email}
             onChange={(e) => setemail(e.target.value)}
             name="user_email"
           />

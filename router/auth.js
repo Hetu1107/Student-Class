@@ -27,7 +27,7 @@ router.get("/isUserAuth", verifyJWT, (req, res) => {
 router.post("/login", async (req, res) => {
   const email = req.email;
   const token = jwt.sign({ email }, "jwtSecret", {
-    expiresIn: 300,
+    expiresIn: "10d",
   });
   res.json({ auth: true, token: token });
 });
@@ -35,7 +35,7 @@ router.post("/login", async (req, res) => {
 router.post("/register", async (req, res) => {
   const email = req.email;
   const token = jwt.sign({ email }, "jwtSecret", {
-    expiresIn: 300,
+    expiresIn: "10d",
   });
   res.json({ auth: true, token: token });
 });

@@ -40,6 +40,7 @@ function NavBar(props) {
 
   const logout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("email");
     props.history.push("/");
   };
   const handleShowPeople = () => setShowPeople(true);

@@ -41,13 +41,15 @@ function Login(props) {
   }, []);
 
   const login = async (e) => {
+    let flag = 0;
     e.preventDefault();
     setload(true);
     setTimeout(() => {
-      if (email && password) {
+      if (email) {
         db.collection("signin").onSnapshot((snapshot) => {
           snapshot.docs.map((doc) => {
             if (doc.data().email === email) {
+              flag = 1;
               if (doc.data().password === password) {
                 axios
                   .post("/login", {
@@ -68,11 +70,14 @@ function Login(props) {
                 });
               } else {
                 setload(false);
-                window.alert("Wrong Password");
+                window.alert("Invalid Credentials");
               }
             }
             setload(false);
           });
+          if (flag == 0) {
+            window.alert("Invalid Credentials");
+          }
         });
       }
       setload(false);
