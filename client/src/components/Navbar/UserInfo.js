@@ -9,30 +9,30 @@ function UserInfo(props) {
 
   useEffect(async () => {
     await new Promise(function (resolve, reject) {
-
-        db
-          .collection("batch")
-          .doc("pciH9dYco14ZdT8EghcX")
-          .collection("user")
-          .onSnapshot((snap) => {
-            snap.docs.map((doc) => {
-              if (doc.data().email === props.email) {
-                if (doc.data().username === "") {
+      db.collection("batch")
+        .doc("pciH9dYco14ZdT8EghcX")
+        .collection("user")
+        .onSnapshot((snap) => {
+          snap.docs.map((doc) => {
+            if (doc.data().email === props.email) {
+              if (doc.data().username === "") {
+                if (document.getElementById("home-page-user-info")) {
                   document.getElementById("home-page-user-info").style.display =
                     "flex";
-                } else {
-                  document.getElementById("home-page-user-info").style.display =
-                    "none";
-                    resolve(true);
                 }
+              } else if (document.getElementById("home-page-user-info")) {
+                document.getElementById("home-page-user-info").style.display =
+                  "none";
+                resolve(true);
               }
-            });
-          })
+            }
+          });
+        });
     });
   });
 
   const save = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     document.getElementById("home-page-user-info").style.display = "none";
     db.collection("batch")
       .doc("pciH9dYco14ZdT8EghcX")
@@ -110,7 +110,7 @@ function UserInfo(props) {
   };
   return (
     <div className="home-page-user-info" id="home-page-user-info">
-      <form className="home-page-user-info-box" onSubmit={(e)=>save(e)}>
+      <form className="home-page-user-info-box" onSubmit={(e) => save(e)}>
         <div className="home-page-user-info-box-avtar">
           <img id="blah" src={src} alt="your image" />
           <input
@@ -118,15 +118,18 @@ function UserInfo(props) {
             type="file"
             id="imgInp"
             onChange={(e) => changeUrl(e)}
-          required/>
+            required
+          />
         </div>
         <div className="home-page-user-info-box-username">
           <h4>Username</h4>
-          <input type="text" onChange={(e) => setUsername(e.target.value)} required/>
+          <input
+            type="text"
+            onChange={(e) => setUsername(e.target.value)}
+            required
+          />
         </div>
-        <button className="save-username-and-avtar">
-          Save
-        </button>
+        <button className="save-username-and-avtar">Save</button>
       </form>
     </div>
   );
