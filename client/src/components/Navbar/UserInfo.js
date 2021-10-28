@@ -9,7 +9,7 @@ function UserInfo(props) {
 
   useEffect(async () => {
     await new Promise(function (resolve, reject) {
-      resolve(
+
         db
           .collection("batch")
           .doc("pciH9dYco14ZdT8EghcX")
@@ -23,15 +23,16 @@ function UserInfo(props) {
                 } else {
                   document.getElementById("home-page-user-info").style.display =
                     "none";
+                    resolve(true);
                 }
               }
             });
           })
-      );
     });
-  }, []);
+  });
 
-  const save = () => {
+  const save = (e) => {
+    e.preventDefault()
     document.getElementById("home-page-user-info").style.display = "none";
     db.collection("batch")
       .doc("pciH9dYco14ZdT8EghcX")
@@ -109,7 +110,7 @@ function UserInfo(props) {
   };
   return (
     <div className="home-page-user-info" id="home-page-user-info">
-      <div className="home-page-user-info-box">
+      <form className="home-page-user-info-box" onSubmit={(e)=>save(e)}>
         <div className="home-page-user-info-box-avtar">
           <img id="blah" src={src} alt="your image" />
           <input
@@ -117,16 +118,16 @@ function UserInfo(props) {
             type="file"
             id="imgInp"
             onChange={(e) => changeUrl(e)}
-          />
+          required/>
         </div>
         <div className="home-page-user-info-box-username">
           <h4>Username</h4>
-          <input type="text" onChange={(e) => setUsername(e.target.value)} />
+          <input type="text" onChange={(e) => setUsername(e.target.value)} required/>
         </div>
-        <button className="save-username-and-avtar" onClick={save}>
+        <button className="save-username-and-avtar">
           Save
         </button>
-      </div>
+      </form>
     </div>
   );
 }
