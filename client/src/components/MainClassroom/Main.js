@@ -21,7 +21,7 @@ function Main(props) {
   const [title, setTitle] = useState("");
 
   //   for drop down
-  const dropMenu = ["CE", "P & SA", "MPI", "CAO", "ICT", "All"];
+  const dropMenu = ["CE", "P & SA", "MPI", "CAO", "ICT","EC", "All"];
   const [dropItem, setDropItem] = useState("Select Subject");
 
   // serach filters
