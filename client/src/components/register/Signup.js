@@ -82,6 +82,49 @@ function Signup(props) {
           if (response.data.auth) {
             localStorage.setItem("token", response.data.token);
             localStorage.setItem("email", email);
+
+            axios
+              .post("/hash", {
+                password: password,
+              })
+              .then((response) => {
+                db.collection("signup").add({
+                  email,
+                  password: response.data.secPass,
+                  confirm: response.data.secPass,
+                });
+
+                db.collection("batch").onSnapshot((snap) => {
+                  snap.docs.map((doc) => {
+                    if (doc.data().number === 2024) {
+                      setId(doc.id);
+                      console.log(doc.data().number);
+                      console.log(id);
+                      db.collection("batch")
+                        .doc(doc.id)
+                        .collection("user")
+                        .add({
+                          batch: 2024,
+                          email: email,
+                          username: "",
+                          url: "",
+                        });
+                    }
+                  });
+                });
+
+                db.collection("signin")
+                  .add({
+                    email,
+                    password: response.data.secPass,
+                  })
+                  .then(() => {
+                    props.history.push({
+                      pathname: "/home",
+                      state: { signup: email },
+                    });
+                  });
+              });
           } else {
             alert("error in response");
           }
@@ -89,40 +132,6 @@ function Signup(props) {
 
       console.log(actualCode.toString());
       console.log(code.toString());
-
-      db.collection("signup").add({
-        email,
-        password,
-        confirm,
-      });
-
-      db.collection("batch").onSnapshot((snap) => {
-        snap.docs.map((doc) => {
-          if (doc.data().number === 2024) {
-            setId(doc.id);
-            console.log(doc.data().number);
-            console.log(id);
-            db.collection("batch").doc(doc.id).collection("user").add({
-              batch: 2024,
-              email: email,
-              username: "",
-              url: "",
-            });
-          }
-        });
-      });
-
-      db.collection("signin")
-        .add({
-          email,
-          password,
-        })
-        .then(() => {
-          props.history.push({
-            pathname: "/home",
-            state: { signup: email },
-          });
-        });
     } else {
       alert("wrong code");
     }

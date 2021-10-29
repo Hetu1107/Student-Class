@@ -204,7 +204,14 @@ function Main(props) {
               </label>
             </div>
             <div className="announce-after-box-down-save">
-              <button onClick={() => setAnnounce(false)}>Cancel</button>
+              <button
+                onClick={() => {
+                  setDropItem("Select Subject");
+                  setAnnounce(false);
+                }}
+              >
+                Cancel
+              </button>
               <button
                 onClick={() => {
                   if (message && title && dropItem) {
@@ -216,6 +223,7 @@ function Main(props) {
                       dropItem,
                       props.location.state.batchName
                     );
+                    setDropItem("Select Subject");
                     setAnnounce(false);
                   } else {
                     window.alert(

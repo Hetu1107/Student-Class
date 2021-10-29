@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 
 const verifyJWT = (req, res, next) => {
   const token = req.headers["x-access-token"];
@@ -24,13 +25,7 @@ router.get("/isUserAuth", verifyJWT, (req, res) => {
   res.json({ auth: true, message: "you are authenticated" });
 });
 
-router.post("/login", async (req, res) => {
-  const email = req.email;
-  const token = jwt.sign({ email }, "jwtSecret", {
-    expiresIn: "10d",
-  });
-  res.json({ auth: true, token: token });
-});
+
 
 router.post("/register", async (req, res) => {
   const email = req.email;
