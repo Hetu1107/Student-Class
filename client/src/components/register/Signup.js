@@ -42,28 +42,32 @@ function Signup(props) {
       if (flag == 0) {
         window.alert("Account already registered with this email id.");
       } else {
-        setload(true);
-        emailjs
-          .sendForm(
-            "service_2ryuebd",
-            "template_jgkssph",
-            form.current,
-            "user_ltxCptfH43Pg32et8yUrw"
-          )
-          .then(
-            (result) => {
-              setTimeout(() => {}, 3000);
-              console.log(result.text);
-              localStorage.removeItem("email");
-              localStorage.removeItem("token");
-              document.getElementById("signup").style.display = "none";
-              document.getElementById("code").style.display = "flex";
-              setload(false);
-            },
-            (error) => {
-              console.log(error.text);
-            }
-          );
+        if (password && password === confirm) {
+          setload(true);
+          emailjs
+            .sendForm(
+              "service_2ryuebd",
+              "template_jgkssph",
+              form.current,
+              "user_ltxCptfH43Pg32et8yUrw"
+            )
+            .then(
+              (result) => {
+                setTimeout(() => {}, 3000);
+                console.log(result.text);
+                localStorage.removeItem("email");
+                localStorage.removeItem("token");
+                document.getElementById("signup").style.display = "none";
+                document.getElementById("code").style.display = "flex";
+                setload(false);
+              },
+              (error) => {
+                console.log(error.text);
+              }
+            );
+        } else {
+          window.alert("Error Signing up");
+        }
         // document.getElementById("signup").style.display = "none";
         // document.getElementById("code").style.display = "flex";
       }
@@ -126,7 +130,7 @@ function Signup(props) {
                   });
               });
           } else {
-            alert("error in response");
+            alert("Error in signing up");
           }
         });
 
@@ -177,12 +181,17 @@ function Signup(props) {
           <input
             type="password"
             id="password"
+            value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
         <div className="password">
           <h4>re-enter Password</h4>
-          <input type="password" onChange={(e) => setConfirm(e.target.value)} />
+          <input
+            type="password"
+            value={confirm}
+            onChange={(e) => setConfirm(e.target.value)}
+          />
         </div>
         <div className="button">
           <input type="submit" value="Create-Profile" />
