@@ -108,9 +108,6 @@ function AnnoucementBox(props) {
                         <a href={file?.url} target="_blank">
                           <i className="far fa-eye" />
                         </a>
-                        <a href={file?.url} className="download">
-                          <i className="fas fa-download" />
-                        </a>
                       </div>
                     </div>
                   </>

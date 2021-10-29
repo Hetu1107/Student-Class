@@ -21,7 +21,7 @@ function Main(props) {
   const [title, setTitle] = useState("");
 
   //   for drop down
-  const dropMenu = ["CE", "P & SA", "MPI", "CAO", "ICT"];
+  const dropMenu = ["CE", "P & SA", "MPI", "CAO", "ICT", "All"];
   const [dropItem, setDropItem] = useState("Select Subject");
 
   // serach filters
@@ -214,7 +214,7 @@ function Main(props) {
               </button>
               <button
                 onClick={() => {
-                  if (message && title && dropItem) {
+                  if ((message && title && dropItem)&&(dropItem!="Select Subject")) {
                     post(
                       title,
                       message,
@@ -325,8 +325,9 @@ function Main(props) {
                     </div>
                   </div>
                 );
-              } else if (
-                selectFilter == "Select" &&
+              } 
+              else if (
+               ((selectFilter == "Select") || (selectFilter == "All") )&&
                 res.title
                   .toLowerCase()
                   .includes(searchFilter.trim().toLowerCase())
