@@ -49,7 +49,7 @@ function Home(props) {
         },
       })
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         if (!response.data.auth) {
           props.history.push("/");
         } else {
@@ -75,8 +75,8 @@ function Home(props) {
       });
     });
 
-    console.log(imageUrl);
-    console.log(res.batchName);
+    // console.log(imageUrl);
+    // console.log(res.batchName);
   };
 
   useEffect(() => {
@@ -99,8 +99,8 @@ function Home(props) {
             if (doc.data().number === batch) {
               docId = doc.id;
               setId(docId);
-              console.log(doc.data().number);
-              console.log(id);
+              // console.log(doc.data().number);
+              // console.log(id);
               setload(false);
             }
           });
@@ -121,13 +121,13 @@ function Home(props) {
             setUsers(snap.docs.map((doc) => doc.data().username));
             snap.docs.map((doc) => {
               if (doc.data().email === email) {
-                console.log(email);
+                // console.log(email);
                 setUserDetails(doc.data());
-                console.log(doc.data().username);
-                setImageUrl(doc.data().url);
+                // console.log(doc.data().username);
+                // setImageUrl(doc.data().url);
               }
             });
-            console.log(users);
+            // console.log(users);
             setload(false);
           })
       );

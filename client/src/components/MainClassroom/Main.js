@@ -52,7 +52,7 @@ function Main(props) {
         },
       })
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         if (!response.data.auth) {
           props.history.push("/");
         } else {
@@ -107,7 +107,7 @@ function Main(props) {
                 (item) => item.batchName == props.location.state.batchName
               )
             );
-            console.log(finalData);
+            // console.log(finalData);
             setload(false);
           })
       );
@@ -137,7 +137,7 @@ function Main(props) {
       }
       setuploadedfiles([...uploadedFiles, fileName]);
     }
-    console.log(uploadedFiles);
+    // console.log(uploadedFiles);
   };
 
   const announcementBox = () => {

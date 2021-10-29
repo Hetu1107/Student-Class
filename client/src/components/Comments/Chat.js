@@ -18,14 +18,14 @@ function Chat(props) {
   }, [props.postId]);
 
   useEffect(() => {
-    console.log(props.postId);
-    console.log(chatMessage);
+    // console.log(props.postId);
+    // console.log(chatMessage);
   }, [chatMessage]);
 
   const send = (e) => {
     e.preventDefault();
     if (message) {
-      console.log(message);
+      // console.log(message);
       setMessage("");
       db.collection("batch")
         .doc("pciH9dYco14ZdT8EghcX")

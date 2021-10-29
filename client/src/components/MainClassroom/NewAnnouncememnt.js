@@ -4,7 +4,7 @@ import firebase from "firebase";
 
 export async function newAnnouncement(e, fileUrl) {
   return new Promise((resolve, reject) => {
-    console.log("clicked");
+    // console.log("clicked");
     const file = e.target.files[0];
     if (file) {
       const uploadTask = storage
@@ -18,7 +18,7 @@ export async function newAnnouncement(e, fileUrl) {
           );
         },
         (error) => {
-          console.log(error);
+          // console.log(error);
         },
         () => {
           storage
@@ -26,11 +26,13 @@ export async function newAnnouncement(e, fileUrl) {
             .child(e.target.files[0].name)
             .getDownloadURL()
             .then((url) => {
-              console.log(url);
+              // console.log(url);
               fileUrl.push(url);
               resolve(url);
             })
-            .catch((err) => console.log(err));
+            .catch((err) => {
+              // console.log(err);
+            });
         }
       );
     }

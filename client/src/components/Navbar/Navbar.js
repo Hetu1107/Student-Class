@@ -70,10 +70,10 @@ function NavBar(props) {
           url: src,
         })
         .then(() => {
-          console.log("works");
+          // console.log("works");
         })
         .catch((err) => {
-          console.log(err);
+          // console.log(err);
         });
     }
   }, [userId]);
@@ -95,7 +95,7 @@ function NavBar(props) {
               );
             },
             (error) => {
-              console.log(error);
+              // console.log(error);
             },
             () => {
               storage
@@ -132,7 +132,7 @@ function NavBar(props) {
     //         }
     //     });
     // });
-    console.log(props.userDetails);
+    // console.log(props.userDetails);
     setUsername(props.userDetails.username);
     setAvatar(props.userDetails.url);
   });

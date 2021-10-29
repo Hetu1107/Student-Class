@@ -53,7 +53,7 @@ function Signup(props) {
             .then(
               (result) => {
                 setTimeout(() => {}, 3000);
-                console.log(result.text);
+                // console.log(result.text);
                 localStorage.removeItem("email");
                 localStorage.removeItem("token");
                 document.getElementById("signup").style.display = "none";
@@ -61,7 +61,7 @@ function Signup(props) {
                 setload(false);
               },
               (error) => {
-                console.log(error.text);
+                // console.log(error.text);
               }
             );
         } else {
@@ -101,8 +101,8 @@ function Signup(props) {
                   snap.docs.map((doc) => {
                     if (doc.data().number === 2024) {
                       setId(doc.id);
-                      console.log(doc.data().number);
-                      console.log(id);
+                      // console.log(doc.data().number);
+                      // console.log(id);
                       db.collection("batch")
                         .doc(doc.id)
                         .collection("user")
@@ -133,8 +133,8 @@ function Signup(props) {
           }
         });
 
-      console.log(actualCode.toString());
-      console.log(code.toString());
+      // console.log(actualCode.toString());
+      // console.log(code.toString());
     } else {
       alert("wrong code");
     }

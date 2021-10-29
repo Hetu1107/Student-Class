@@ -48,11 +48,11 @@ function UserInfo(props) {
                 url: src,
               })
               .then(() => {
-                console.log("works");
+                // console.log("works");
               })
               .catch((err) => {
                 alert(err);
-                console.log(err);
+                // console.log(err);
               });
             db.collection("batch")
               .doc("pciH9dYco14ZdT8EghcX")
@@ -84,7 +84,7 @@ function UserInfo(props) {
               );
             },
             (error) => {
-              console.log(error);
+              // console.log(error);
             },
             () => {
               storage
@@ -92,15 +92,15 @@ function UserInfo(props) {
                 .child(e.target.files[0].name)
                 .getDownloadURL()
                 .then((url) => {
-                  console.log(url);
+                  // console.log(url);
                   setSrc(url);
-                  console.log(props.email);
+                  // console.log(props.email);
                   // console.log(props.id);
                   props.lodiing(false);
                 })
                 .catch((err) => {
                   props.lodiing(true);
-                  console.log(err);
+                  // console.log(err);
                 });
             }
           )
