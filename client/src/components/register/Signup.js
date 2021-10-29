@@ -41,7 +41,11 @@ function Signup(props) {
       if (flag == 0) {
         window.alert("Account already registered with this email id.");
       } else {
-        if (password && password === confirm) {
+        if (
+          password &&
+          password === confirm &&
+          email.includes("@iiitsurat.ac.in")
+        ) {
           setload(true);
           emailjs
             .sendForm(
@@ -65,7 +69,9 @@ function Signup(props) {
               }
             );
         } else {
-          window.alert("Error Signing up");
+          window.alert(
+            "Error Signing up, please make sure you are signing up using institute id"
+          );
         }
         // document.getElementById("signup").style.display = "none";
         // document.getElementById("code").style.display = "flex";
