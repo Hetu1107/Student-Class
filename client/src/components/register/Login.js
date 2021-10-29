@@ -50,28 +50,25 @@ function Login(props) {
           snapshot.docs.map((doc) => {
             if (doc.data().email === email) {
               flag = 1;
-              if (doc.data().password === password) {
-                axios
-                  .post("/login", {
-                    email: doc.data().email,
-                  })
-                  .then((response) => {
-                    if (response.data.auth) {
-                      localStorage.setItem("token", response.data.token);
-                      localStorage.setItem("email", email);
-                    } else {
-                      window.alert("error");
-                    }
-                  });
-                setload(false);
-                props.history.push({
-                  pathname: "/home",
-                  state: { email: "", login: email },
+              axios
+                .post("/login", {
+                  email: doc.data().email,
+                  correctPass: doc.data().password,
+                  userPass: password,
+                })
+                .then((response) => {
+                  if (response.data.auth) {
+                    localStorage.setItem("token", response.data.token);
+                    localStorage.setItem("email", email);
+                    props.history.push({
+                      pathname: "/home",
+                      state: { email: "", login: email },
+                    });
+                    setload(false);
+                  } else {
+                    window.alert("Invalid credentials");
+                  }
                 });
-              } else {
-                setload(false);
-                window.alert("Invalid Credentials");
-              }
             }
             setload(false);
           });
