@@ -13,7 +13,6 @@ function Signup(props) {
   const [code, setCode] = useState();
   const [load, setload] = useState(false);
   const [id, setId] = useState();
-  const [flag, setFlag] = useState(0);
 
   const form = useRef();
   const loading = () => {
@@ -46,10 +45,10 @@ function Signup(props) {
           setload(true);
           emailjs
             .sendForm(
-              "service_2ryuebd",
-              "template_jgkssph",
+              "service_4xb63q5",
+              "template_xn1gyii",
               form.current,
-              "user_ltxCptfH43Pg32et8yUrw"
+              "user_FiABlOrM99A3dIoTZv7TU"
             )
             .then(
               (result) => {
