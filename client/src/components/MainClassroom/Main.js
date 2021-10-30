@@ -21,7 +21,7 @@ function Main(props) {
   const [title, setTitle] = useState("");
 
   //   for drop down
-  const dropMenu = ["CE", "P & SA", "MPI", "CAO", "ICT","EC", "All"];
+  const dropMenu = ["CE", "P & SA", "MPI", "CAO", "ICT", "EC", "All"];
   const [dropItem, setDropItem] = useState("Select Subject");
 
   // serach filters
@@ -166,11 +166,13 @@ function Main(props) {
             <input
               type="text"
               className="title"
+              value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="Topic"
             />
             <input
               type="text"
+              value={message}
               onChange={(e) => setMessage(e.target.value)}
               placeholder="write the description..."
             />
@@ -206,7 +208,11 @@ function Main(props) {
             <div className="announce-after-box-down-save">
               <button
                 onClick={() => {
+                  setuploadedfiles([]);
                   setDropItem("Select Subject");
+                  setAllUrl([]);
+                  setMessage("");
+                  setTitle("");
                   setAnnounce(false);
                 }}
               >
@@ -214,7 +220,12 @@ function Main(props) {
               </button>
               <button
                 onClick={() => {
-                  if ((message && title && dropItem)&&(dropItem!="Select Subject")) {
+                  if (
+                    message &&
+                    title &&
+                    dropItem &&
+                    dropItem != "Select Subject"
+                  ) {
                     post(
                       title,
                       message,
@@ -223,8 +234,12 @@ function Main(props) {
                       dropItem,
                       props.location.state.batchName
                     );
+                    setAllUrl([]);
+                    setMessage("");
+                    setTitle("");
                     setDropItem("Select Subject");
                     setAnnounce(false);
+                    setuploadedfiles([]);
                   } else {
                     window.alert(
                       "Please make sure you have filled Subject,Topic,Message"
@@ -325,9 +340,8 @@ function Main(props) {
                     </div>
                   </div>
                 );
-              } 
-              else if (
-               ((selectFilter == "Select") || (selectFilter == "All") )&&
+              } else if (
+                (selectFilter == "Select" || selectFilter == "All") &&
                 res.title
                   .toLowerCase()
                   .includes(searchFilter.trim().toLowerCase())
