@@ -117,6 +117,7 @@ function AnnoucementBox(props) {
         </div>
       </div>
       <Chat
+        email={props.location.state?.userDetails.email}
         username={props.location.state?.userDetails.username}
         url={props.location.state?.userDetails.url}
         postId={props.location.state?.res.id}

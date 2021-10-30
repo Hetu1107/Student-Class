@@ -77,6 +77,19 @@ function Main(props) {
     });
   };
 
+  const deleteAnnouncement = (res) => {
+    if (window.confirm("Are you sure you want to delete this:")) {
+      db.collection("batch")
+        .doc("pciH9dYco14ZdT8EghcX")
+        .collection("post")
+        .doc(res.id)
+        .delete()
+        .then(() => {
+          // window.alert("deleted");
+        });
+    }
+  };
+
   useEffect(async () => {
     setload(true);
     await new Promise(function (resolve, reject) {

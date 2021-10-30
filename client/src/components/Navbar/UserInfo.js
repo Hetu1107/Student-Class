@@ -125,6 +125,7 @@ function UserInfo(props) {
           <h4>Username</h4>
           <input
             type="text"
+            value={username}
             onChange={(e) => setUsername(e.target.value)}
             required
           />
