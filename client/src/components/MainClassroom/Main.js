@@ -21,7 +21,7 @@ function Main(props) {
   const [title, setTitle] = useState("");
 
   //   for drop down
-  const dropMenu = ["CE", "P & SA", "MPI", "CAO", "ICT","EC", "All"];
+  const dropMenu = ["CE", "P & SA", "MPI", "CAO", "ICT", "EC", "All"];
   const [dropItem, setDropItem] = useState("Select Subject");
 
   // serach filters
@@ -52,7 +52,7 @@ function Main(props) {
         },
       })
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         if (!response.data.auth) {
           props.history.push("/");
         } else {
@@ -77,6 +77,19 @@ function Main(props) {
     });
   };
 
+  const deleteAnnouncement = (res) => {
+    if (window.confirm("Are you sure you want to delete this:")) {
+      db.collection("batch")
+        .doc("pciH9dYco14ZdT8EghcX")
+        .collection("post")
+        .doc(res.id)
+        .delete()
+        .then(() => {
+          // window.alert("deleted");
+        });
+    }
+  };
+
   useEffect(async () => {
     setload(true);
     await new Promise(function (resolve, reject) {
@@ -98,6 +111,7 @@ function Main(props) {
                 subject: doc.data().subject,
                 timestamp: doc.data().timestamp,
                 batchName: doc.data().batchName,
+                email: doc.data().email,
               };
               finalData.push(classData);
             });
@@ -107,7 +121,7 @@ function Main(props) {
                 (item) => item.batchName == props.location.state.batchName
               )
             );
-            console.log(finalData);
+            // console.log(finalData);
             setload(false);
           })
       );
@@ -137,7 +151,7 @@ function Main(props) {
       }
       setuploadedfiles([...uploadedFiles, fileName]);
     }
-    console.log(uploadedFiles);
+    // console.log(uploadedFiles);
   };
 
   const announcementBox = () => {
@@ -166,11 +180,13 @@ function Main(props) {
             <input
               type="text"
               className="title"
+              value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="Topic"
             />
             <input
               type="text"
+              value={message}
               onChange={(e) => setMessage(e.target.value)}
               placeholder="write the description..."
             />
@@ -206,7 +222,11 @@ function Main(props) {
             <div className="announce-after-box-down-save">
               <button
                 onClick={() => {
+                  setuploadedfiles([]);
                   setDropItem("Select Subject");
+                  setAllUrl([]);
+                  setMessage("");
+                  setTitle("");
                   setAnnounce(false);
                 }}
               >
@@ -214,17 +234,27 @@ function Main(props) {
               </button>
               <button
                 onClick={() => {
-                  if ((message && title && dropItem)&&(dropItem!="Select Subject")) {
+                  if (
+                    message &&
+                    title &&
+                    dropItem &&
+                    dropItem != "Select Subject"
+                  ) {
                     post(
                       title,
                       message,
                       props.location.state.userDetails.username,
                       allUrl,
                       dropItem,
-                      props.location.state.batchName
+                      props.location.state.batchName,
+                      props.location.state.userDetails.email
                     );
+                    setAllUrl([]);
+                    setMessage("");
+                    setTitle("");
                     setDropItem("Select Subject");
                     setAnnounce(false);
+                    setuploadedfiles([]);
                   } else {
                     window.alert(
                       "Please make sure you have filled Subject,Topic,Message"
@@ -303,56 +333,81 @@ function Main(props) {
                 searchFilter.trim().toLowerCase() == ""
               ) {
                 return (
-                  <div
-                    className="batch-main-page-middle-boxes"
-                    id={res.id}
-                    onClick={() => redirect(res)}
-                  >
-                    <div className="batch-main-page-middle-boxes-i">
-                      <i class="fas fa-bullhorn" />
-                    </div>
-                    <div className="batch-main-page-middle-boxes-date-and-title">
-                      <div className="batch-main-page-middle-boxes-title">
-                        <h2>
-                          {res.author} Posted New Document : {res.title}
-                        </h2>
+                  <div className="flex">
+                    <div
+                      className="batch-main-page-middle-boxes"
+                      id={res.id}
+                      onClick={() => redirect(res)}
+                    >
+                      <div className="batch-main-page-middle-boxes-i">
+                        <i class="fas fa-bullhorn" />
                       </div>
-                      <h4>
-                        {new Date(res?.timestamp?.seconds * 1000)
-                          .toString()
-                          .substring(0, 16)}
-                      </h4>
+                      <div className="batch-main-page-middle-boxes-date-and-title">
+                        <div className="batch-main-page-middle-boxes-title">
+                          <h2>
+                            {res.author} Posted New Document : {res.title}
+                          </h2>
+                        </div>
+                        <h4>
+                          {new Date(res?.timestamp?.seconds * 1000)
+                            .toString()
+                            .substring(0, 21)}
+                        </h4>
+                      </div>
                     </div>
+                    {props.location.state?.userDetails.email === res?.email ||
+                    props.location.state?.userDetails.email ===
+                      "studentClassroom2024@gmail.com" ? (
+                      <div className="batch-main-page-middle-boxes-i del">
+                        <i
+                          style={{ cursor: "pointer" }}
+                          onClick={() => deleteAnnouncement(res)}
+                          className="fa fa-trash"
+                        ></i>
+                      </div>
+                    ) : null}
                   </div>
                 );
-              } 
-              else if (
-               ((selectFilter == "Select") || (selectFilter == "All") )&&
+              } else if (
+                (selectFilter == "Select" || selectFilter == "All") &&
                 res.title
                   .toLowerCase()
                   .includes(searchFilter.trim().toLowerCase())
               ) {
                 return (
-                  <div
-                    className="batch-main-page-middle-boxes"
-                    id={res.id}
-                    onClick={() => redirect(res)}
-                  >
-                    <div className="batch-main-page-middle-boxes-i">
-                      <i class="fas fa-bullhorn" />
-                    </div>
-                    <div className="batch-main-page-middle-boxes-date-and-title">
-                      <div className="batch-main-page-middle-boxes-title">
-                        <h2>
-                          {res.author} Posted New Document : {res.title}
-                        </h2>
+                  <div className="flex">
+                    <div
+                      className="batch-main-page-middle-boxes"
+                      id={res.id}
+                      onClick={() => redirect(res)}
+                    >
+                      <div className="batch-main-page-middle-boxes-i">
+                        <i class="fas fa-bullhorn" />
                       </div>
-                      <h4>
-                        {new Date(res?.timestamp?.seconds * 1000)
-                          .toString()
-                          .substring(0, 16)}
-                      </h4>
+                      <div className="batch-main-page-middle-boxes-date-and-title">
+                        <div className="batch-main-page-middle-boxes-title">
+                          <h2>
+                            {res.author} Posted New Document : {res.title}
+                          </h2>
+                        </div>
+                        <h4>
+                          {new Date(res?.timestamp?.seconds * 1000)
+                            .toString()
+                            .substring(0, 21)}
+                        </h4>
+                      </div>
                     </div>
+                    {props.location.state?.userDetails.email === res?.email ||
+                    props.location.state?.userDetails.email ===
+                      "studentClassroom2024@gmail.com" ? (
+                      <div className="batch-main-page-middle-boxes-i del">
+                        <i
+                          style={{ cursor: "pointer" }}
+                          onClick={() => deleteAnnouncement(res)}
+                          className="fa fa-trash"
+                        ></i>
+                      </div>
+                    ) : null}
                   </div>
                 );
               } else if (
@@ -362,26 +417,39 @@ function Main(props) {
                   .includes(searchFilter.trim().toLowerCase())
               ) {
                 return (
-                  <div
-                    className="batch-main-page-middle-boxes"
-                    id={res.id}
-                    onClick={() => redirect(res)}
-                  >
-                    <div className="batch-main-page-middle-boxes-i">
-                      <i class="fas fa-bullhorn" />
-                    </div>
-                    <div className="batch-main-page-middle-boxes-date-and-title">
-                      <div className="batch-main-page-middle-boxes-title">
-                        <h2>
-                          {res.author} Posted New Document : {res.title}
-                        </h2>
+                  <div className="flex">
+                    <div
+                      className="batch-main-page-middle-boxes"
+                      id={res.id}
+                      onClick={() => redirect(res)}
+                    >
+                      <div className="batch-main-page-middle-boxes-i">
+                        <i class="fas fa-bullhorn" />
                       </div>
-                      <h4>
-                        {new Date(res?.timestamp?.seconds * 1000)
-                          .toString()
-                          .substring(0, 16)}
-                      </h4>
+                      <div className="batch-main-page-middle-boxes-date-and-title">
+                        <div className="batch-main-page-middle-boxes-title">
+                          <h2>
+                            {res.author} Posted New Document : {res.title}
+                          </h2>
+                        </div>
+                        <h4>
+                          {new Date(res?.timestamp?.seconds * 1000)
+                            .toString()
+                            .substring(0, 21)}
+                        </h4>
+                      </div>
                     </div>
+                    {props.location.state?.userDetails.email === res?.email ||
+                    props.location.state?.userDetails.email ===
+                      "studentClassroom2024@gmail.com" ? (
+                      <div className="batch-main-page-middle-boxes-i del">
+                        <i
+                          style={{ cursor: "pointer" }}
+                          onClick={() => deleteAnnouncement(res)}
+                          className="fa fa-trash"
+                        ></i>
+                      </div>
+                    ) : null}
                   </div>
                 );
               }

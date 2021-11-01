@@ -17,9 +17,9 @@ function App() {
           <Route exact path="/home">
             <Home />
           </Route>
-          <Route exact path="/email">
+          {/* <Route exact path="/email">
             <ContactUs />
-          </Route>
+          </Route> */}
           <ProtectedRoute exact path="/main" component={Main} />
           <ProtectedRoute
             exact

@@ -13,7 +13,6 @@ function Signup(props) {
   const [code, setCode] = useState();
   const [load, setload] = useState(false);
   const [id, setId] = useState();
-  const [flag, setFlag] = useState(0);
 
   const form = useRef();
   const loading = () => {
@@ -42,19 +41,23 @@ function Signup(props) {
       if (flag == 0) {
         window.alert("Account already registered with this email id.");
       } else {
-        if (password && password === confirm) {
+        if (
+          password &&
+          password === confirm &&
+          email.includes("@iiitsurat.ac.in")
+        ) {
           setload(true);
           emailjs
             .sendForm(
-              "service_2ryuebd",
-              "template_jgkssph",
+              "service_4xb63q5",
+              "template_xn1gyii",
               form.current,
-              "user_ltxCptfH43Pg32et8yUrw"
+              "user_FiABlOrM99A3dIoTZv7TU"
             )
             .then(
               (result) => {
                 setTimeout(() => {}, 3000);
-                console.log(result.text);
+                // console.log(result.text);
                 localStorage.removeItem("email");
                 localStorage.removeItem("token");
                 document.getElementById("signup").style.display = "none";
@@ -62,11 +65,13 @@ function Signup(props) {
                 setload(false);
               },
               (error) => {
-                console.log(error.text);
+                // console.log(error.text);
               }
             );
         } else {
-          window.alert("Error Signing up");
+          window.alert(
+            "Error Signing up, please make sure you are signing up using institute id"
+          );
         }
         // document.getElementById("signup").style.display = "none";
         // document.getElementById("code").style.display = "flex";
@@ -102,8 +107,8 @@ function Signup(props) {
                   snap.docs.map((doc) => {
                     if (doc.data().number === 2024) {
                       setId(doc.id);
-                      console.log(doc.data().number);
-                      console.log(id);
+                      // console.log(doc.data().number);
+                      // console.log(id);
                       db.collection("batch")
                         .doc(doc.id)
                         .collection("user")
@@ -134,8 +139,8 @@ function Signup(props) {
           }
         });
 
-      console.log(actualCode.toString());
-      console.log(code.toString());
+      // console.log(actualCode.toString());
+      // console.log(code.toString());
     } else {
       alert("wrong code");
     }

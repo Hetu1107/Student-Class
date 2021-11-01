@@ -18,7 +18,7 @@ function AnnoucementBox(props) {
         },
       })
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         if (!response.data.auth) {
           props.history.push("/");
         } else {
@@ -35,7 +35,7 @@ function AnnoucementBox(props) {
       .doc("pciH9dYco14ZdT8EghcX")
       .collection("user")
       .onSnapshot((snap) => {
-        console.log(snap);
+        // console.log(snap);
         snap.docs.map((doc) => {
           if (doc.data().email === props.location.state?.email) {
             setProfile(doc.data().url);
@@ -64,7 +64,7 @@ function AnnoucementBox(props) {
 
   useEffect(() => {
     setFiles(details?.url);
-    console.log(details);
+    // console.log(details);
   }, [details]);
 
   return (
@@ -97,7 +97,7 @@ function AnnoucementBox(props) {
           <h2>Files</h2>
           {files
             ? files.map((file) => {
-                console.log(file);
+                // console.log(file);
                 return (
                   <>
                     <div className="after-main-announcement-box-content-files-box">
@@ -117,6 +117,7 @@ function AnnoucementBox(props) {
         </div>
       </div>
       <Chat
+        email={props.location.state?.userDetails.email}
         username={props.location.state?.userDetails.username}
         url={props.location.state?.userDetails.url}
         postId={props.location.state?.res.id}

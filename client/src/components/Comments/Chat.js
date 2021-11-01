@@ -13,19 +13,32 @@ function Chat(props) {
       .collection("chat")
       .orderBy("timestamp", "asc")
       .onSnapshot((snap) => {
-        setChatMessage(snap.docs.map((doc) => doc.data()));
+        let finalData = [];
+        snap.docs.map((doc) => {
+          const classData = {
+            author: doc.data().author,
+            message: doc.data().message,
+            url: doc.data().url,
+            id: doc.id,
+            email: doc.data().email,
+            timestamp: doc.data().timestamp,
+          };
+          finalData.push(classData);
+        });
+        setChatMessage(finalData);
+        // setChatMessage(snap.docs.map((doc) => doc.data()));
       });
   }, [props.postId]);
 
   useEffect(() => {
-    console.log(props.postId);
-    console.log(chatMessage);
+    // console.log(props.postId);
+    // console.log(chatMessage);
   }, [chatMessage]);
 
   const send = (e) => {
     e.preventDefault();
     if (message) {
-      console.log(message);
+      // console.log(message);
       setMessage("");
       db.collection("batch")
         .doc("pciH9dYco14ZdT8EghcX")
@@ -35,12 +48,28 @@ function Chat(props) {
         .add({
           author: props.username,
           message: message,
+          email: props.email,
           timestamp: firebase.firestore.FieldValue.serverTimestamp(),
           url: props.url,
         });
       let element = document.getElementById("chat_view_box");
       element.scrollTop = element.scrollHeight;
       setMessage("");
+    }
+  };
+
+  const deleteMessage = (message) => {
+    if (window.confirm("Are you sure you want to delete this:")) {
+      db.collection("batch")
+        .doc("pciH9dYco14ZdT8EghcX")
+        .collection("post")
+        .doc(props.postId)
+        .collection("chat")
+        .doc(message.id)
+        .delete()
+        .then(() => {
+          console.log("message deleted");
+        });
     }
   };
 
@@ -56,12 +85,29 @@ function Chat(props) {
         >
           {chatMessage.length
             ? chatMessage.map((message) => {
-                return (
-                  <div className="after-main-announcement-box-chats">
-                    <img src={message.url} />
-                    <h2 id="Comment_messege">{message.message}</h2>
-                  </div>
-                );
+                if (
+                  message.email === props.email ||
+                  props.email === "studentClassroom2024@gmail.com"
+                ) {
+                  return (
+                    <div className="after-main-announcement-box-chats">
+                      <img src={message.url} />
+                      <h2 id="Comment_messege">{message.message}</h2>
+                      <i
+                        style={{ cursor: "pointer" }}
+                        onClick={() => deleteMessage(message)}
+                        className="fa fa-trash"
+                      ></i>
+                    </div>
+                  );
+                } else {
+                  return (
+                    <div className="after-main-announcement-box-chats">
+                      <img src={message.url} />
+                      <h2 id="Comment_messege">{message.message}</h2>
+                    </div>
+                  );
+                }
               })
             : null}
         </div>

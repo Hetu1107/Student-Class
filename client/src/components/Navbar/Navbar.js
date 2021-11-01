@@ -70,10 +70,10 @@ function NavBar(props) {
           url: src,
         })
         .then(() => {
-          console.log("works");
+          // console.log("works");
         })
         .catch((err) => {
-          console.log(err);
+          // console.log(err);
         });
     }
   }, [userId]);
@@ -95,7 +95,7 @@ function NavBar(props) {
               );
             },
             (error) => {
-              console.log(error);
+              // console.log(error);
             },
             () => {
               storage
@@ -132,7 +132,7 @@ function NavBar(props) {
     //         }
     //     });
     // });
-    console.log(props.userDetails);
+    // console.log(props.userDetails);
     setUsername(props.userDetails.username);
     setAvatar(props.userDetails.url);
   });
@@ -209,8 +209,23 @@ function NavBar(props) {
               </Modal.Header>
               <Modal.Body id="people_list_body">
                 <ListGroup id="people_list_list" as="ol" numbered>
+                  <div>Users online:</div>
+                  {props.online.map(on =>{
+                    return(
+                        <ListGroup.Item
+                            as="li"
+                        >
+                          <div className="flex">
+                            <div className="complete">{on}</div>
+                            <div className="end"></div>
+                          </div>
+                        </ListGroup.Item>
+                    )
+                  })}
+                  <br/>
+                  <div>Other Users:</div>
                   {allPeople.map((res) => {
-                    if (res.username.trim() != "") {
+                    if (res.username.trim() !== "") {
                       return (
                         <ListGroup.Item
                           as="li"
