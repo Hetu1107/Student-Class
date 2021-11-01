@@ -5,17 +5,17 @@
 ::-webkit-scrollbar {
     width: 10px;
   }
-   
+
 ::-webkit-scrollbar-thumb {
     background: rgb(162, 168, 255);
     border-radius: 20px;
   }
-  
+
 ::-webkit-scrollbar-track {
     background: #ddd;
     border-radius: 20px;
   }
-  
+
 
 #navbar{
     width: 100vw;
@@ -173,6 +173,22 @@
 .save-username-and-avtar:hover{
     background-color: #0085eb98;
 }
+
+.flex{
+    display: flex;
+    flex-direction: row;
+}
+.complete{
+    flex:1;
+}
+.end{
+    margin-right:  15px;
+    width: 14px;
+    height: 14px;
+    background: green;
+    border-radius: 50%
+}
+
 @keyframes scale-display {
     0% {
         opacity: 0;

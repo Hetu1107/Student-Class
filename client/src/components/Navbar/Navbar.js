@@ -209,11 +209,21 @@ function NavBar(props) {
               </Modal.Header>
               <Modal.Body id="people_list_body">
                 <ListGroup id="people_list_list" as="ol" numbered>
+                  <div>Users online:</div>
                   {props.online.map(on =>{
                     return(
-                        <h7>{on}</h7>
+                        <ListGroup.Item
+                            as="li"
+                        >
+                          <div className="flex">
+                            <div className="complete">{on}</div>
+                            <div className="end"></div>
+                          </div>
+                        </ListGroup.Item>
                     )
                   })}
+                  <br/>
+                  <div>Other Users:</div>
                   {allPeople.map((res) => {
                     if (res.username.trim() !== "") {
                       return (
