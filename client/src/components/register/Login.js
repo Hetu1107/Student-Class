@@ -36,6 +36,8 @@ function Login(props) {
       });
   };
 
+  const ForgotPassword = () => {};
+
   useEffect(() => {
     userAuthnticated();
   }, []);
@@ -93,7 +95,11 @@ function Login(props) {
     <form className="login_signup_box_select">
       <div className="username">
         <h4>Email</h4>
-        <input type="text" onChange={(e) => setEmail(e.target.value.trim())} />
+        <input
+          type="text"
+          value={email}
+          onChange={(e) => setEmail(e.target.value.trim())}
+        />
       </div>
       <div className="password">
         <h4>
@@ -103,6 +109,7 @@ function Login(props) {
         <input
           type="password"
           id="password"
+          value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
       </div>
