@@ -5,7 +5,6 @@ import { ContactUs } from "./register/email";
 import Main from "./MainClassroom/Main";
 import AnnoucementBox from "./MainClassroom/AnnoucementBox";
 import ProtectedRoute from "./Protected/ProtectedRoute";
-
 function App() {
   return (
     <div className="app">

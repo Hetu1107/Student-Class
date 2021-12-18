@@ -9,6 +9,11 @@ import { Dropdown, Form, Button, FormControl } from "react-bootstrap";
 import axios from "axios";
 import Auth from "../Protected/auth";
 
+import io from "socket.io-client";
+import { doc } from "firebase/firestore";
+
+const socket = io("/");
+
 let docurl = "#";
 
 function Main(props) {
@@ -74,6 +79,67 @@ function Main(props) {
           userDetails: props.location.state.userDetails,
         },
       });
+    });
+  };
+
+  // useEffect(() => {
+  //     db.collection('batch').doc('pciH9dYco14ZdT8EghcX').collection('post').onSnapshot(snap => {
+  //         snap.docs.map(doc => {
+  //             // if (doc.id === '4jjqnyTNKB7jCQ1Ux7T2') {
+  //                 let read = doc.data().read;
+  //                 let flag = 0;
+  //                 read.map(data => {
+  //                     if (data === props.location.state.userDetails.email) {
+  //                         flag = 1;
+  //                     }
+  //                 });
+  //                 if (flag === 0) {
+  //                     // window.alert('Red');
+  //                     if (document.getElementById(doc.id)) {
+  //                         document.getElementById(doc.id).style.backgroundColor = 'green';
+  //                     }
+  //                 }
+  //             // }
+  //         });
+  //     });
+  // });
+
+  const read = async (res) => {
+    // window.alert(res.id);
+    let read = [];
+    await new Promise((resolve, reject) => {
+      db.collection("batch")
+        .doc("pciH9dYco14ZdT8EghcX")
+        .collection("post")
+        .onSnapshot((snap) => {
+          snap.docs.map((doc) => {
+            if (doc.id === res.id) {
+              read = doc.data().read;
+              let flag = 0;
+              read.map((data) => {
+                if (data === props.location.state.userDetails.email) {
+                  flag = 1;
+                }
+              });
+              if (flag === 0) {
+                read.push(props.location.state.userDetails.email);
+              }
+              resolve(true);
+            }
+          });
+        });
+    }).then(() => {
+      // console.log(read);
+      db.collection("batch")
+        .doc("pciH9dYco14ZdT8EghcX")
+        .collection("post")
+        .doc(res.id)
+        .update({
+          read: read,
+        })
+        .then(() => {
+          console.log("added as marked");
+        });
     });
   };
 
@@ -238,7 +304,7 @@ function Main(props) {
                     message &&
                     title &&
                     dropItem &&
-                    dropItem != "Select Subject"
+                    dropItem !== "Select Subject"
                   ) {
                     post(
                       title,
@@ -255,6 +321,11 @@ function Main(props) {
                     setDropItem("Select Subject");
                     setAnnounce(false);
                     setuploadedfiles([]);
+                    // socket.on("show-announcement",(hello)=>{
+                    //     window.alert("new announcement");
+                    //     console.log(hello)
+                    // });
+                    // socket.emit('new-announcement',2024);
                   } else {
                     window.alert(
                       "Please make sure you have filled Subject,Topic,Message"
@@ -329,18 +400,21 @@ function Main(props) {
         {Maindata.length
           ? Maindata.map((res) => {
               if (
-                selectFilter == "Select" &&
-                searchFilter.trim().toLowerCase() == ""
+                selectFilter === "Select" &&
+                searchFilter.trim().toLowerCase() === ""
               ) {
                 return (
                   <div className="flex">
                     <div
                       className="batch-main-page-middle-boxes"
                       id={res.id}
-                      onClick={() => redirect(res)}
+                      onClick={() => {
+                        redirect(res);
+                        read(res);
+                      }}
                     >
                       <div className="batch-main-page-middle-boxes-i">
-                        <i class="fas fa-bullhorn" />
+                        <i className="fas fa-bullhorn" />
                       </div>
                       <div className="batch-main-page-middle-boxes-date-and-title">
                         <div className="batch-main-page-middle-boxes-title">
@@ -382,7 +456,7 @@ function Main(props) {
                       onClick={() => redirect(res)}
                     >
                       <div className="batch-main-page-middle-boxes-i">
-                        <i class="fas fa-bullhorn" />
+                        <i className="fas fa-bullhorn" />
                       </div>
                       <div className="batch-main-page-middle-boxes-date-and-title">
                         <div className="batch-main-page-middle-boxes-title">
