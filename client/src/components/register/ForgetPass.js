@@ -1,6 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "../../css/ForgotPass.css";
+import db from "../firebase";
 import Loader from "../Loader/Loader";
+import emailjs from "emailjs-com";
+import axios from "axios";
 
 // prop.co = code that we have to send to mail of the user
 // prop.pr = to set page
@@ -19,6 +22,89 @@ function ForgetPass(prop) {
       return <h1></h1>;
     }
   };
+  const form = useRef();
+
+  const sendEmail = async (e) => {
+    e.preventDefault();
+    let flag = 1;
+    const data = await new Promise(function (resolve, reject) {
+      db.collection("signin").onSnapshot((snap) => {
+        snap.docs.map((doc) => {
+          if (doc.data().email == ForgotEmail) {
+            flag = 0;
+            resolve(true);
+          } else {
+            resolve(true);
+          }
+        });
+      });
+    }).then(() => {
+      if (flag == 1) {
+        window.alert("No account with this email");
+      } else {
+        setload(true);
+        emailjs
+          .sendForm(
+            "service_iyewh4h",
+            "template_xn1gyii",
+            form.current,
+            "user_FiABlOrM99A3dIoTZv7TU"
+          )
+          .then(
+            (result) => {
+              setTimeout(() => {}, 3000);
+              // console.log(result.text);
+              setload(false);
+              document.getElementById("forgot_box").style.display = "none";
+              document.getElementById("code_boxx").style.display = "flex";
+            },
+            (error) => {
+              // console.log(error.text);
+            }
+          );
+      }
+    });
+  };
+
+  const checkCode = (e) => {
+    e.preventDefault();
+    const actualCode = prop.co;
+
+    if (FoCode.toString() === actualCode.toString()) {
+      console.log(actualCode.toString());
+      console.log(FoCode.toString());
+      setCodeCheck(false);
+    } else {
+      alert("wrong code");
+    }
+  };
+
+  const changePassword = (e) => {
+    // e.preventDefault();
+    axios
+      .post("/hash", {
+        password: newPassword,
+      })
+      .then((response) => {
+        db.collection("signin").onSnapshot((snap) => {
+          snap.docs.map((doc) => {
+            if (doc.data().email === ForgotEmail) {
+              db.collection("signin")
+                .doc(doc.id)
+                .update({
+                  password: response.data.secPass,
+                })
+                .then(() => {
+                  alert("password has been changed");
+                });
+            }
+          });
+        });
+      }).then(()=>{
+        
+      });
+  };
+
   const showpassword = () => {
     var x = document.getElementById("newpassword");
     if (x.type === "password") {
@@ -28,6 +114,7 @@ function ForgetPass(prop) {
     }
   };
   useEffect(() => {
+    console.log(prop.co);
     document.getElementById("forgot_box").style.display = "flex";
     document.getElementById("code_boxx").style.display = "none";
   }, []);
@@ -35,6 +122,7 @@ function ForgetPass(prop) {
     if (true) {
       document.getElementById("forgot_box").style.display = "none";
       document.getElementById("code_boxx").style.display = "flex";
+      // sendEmail();
     } else {
       document.getElementById("forgot_box").style.display = "flex";
       document.getElementById("code_boxx").style.display = "none";
@@ -45,42 +133,41 @@ function ForgetPass(prop) {
     if (CodeCheck) {
       return (
         <>
-          <div className="forgot_password_box" id="forgot_box">
-            <div className="username">
-              <h4>Email</h4>
+          <form ref={form} onSubmit={sendEmail}>
+            <div className="forgot_password_box" id="forgot_box">
+              <div className="username">
+                <h4>Email</h4>
+                <input
+                  type="text"
+                  name="user_email"
+                  value={ForgotEmail}
+                  onChange={(e) => setForgotEmail(e.target.value.trim())}
+                />
+              </div>
               <input
                 type="text"
-                value={ForgotEmail}
-                onChange={(e) => setForgotEmail(e.target.value.trim())}
+                name="message"
+                value={prop.co}
+                id="actualcode_input"
               />
+              <div className="button">
+                <button type="submit">Varify</button>
+              </div>
+              <div className="back_to_login">
+                <h3 onClick={() => prop.pr(false)}>Back to Login</h3>
+              </div>
             </div>
-            <div className="button">
-              <button onClick={() => checkForgotEmail()}>Varify</button>
+            <div id="code_boxx">
+              <h1>Please Check Your Mail Box and Varify The Code</h1>
+              <input
+                placeholder="code.."
+                onChange={(e) => setFoCode(e.target.value)}
+              />
+              <div className="button">
+                <button onClick={checkCode}>Submit</button>
+              </div>
             </div>
-            <div className="back_to_login">
-              <h3 onClick={() => prop.pr(false)}>Back to Login</h3>
-            </div>
-          </div>
-          <div id="code_boxx">
-            <h1>Please Check Your Mail Box and Varify The Code</h1>
-            <input
-              placeholder="code.."
-              onChange={(e) => setFoCode(e.target.value)}
-            />
-            <div className="button">
-              <button
-                onClick={() => {
-                  if (FoCode == prop.co) {
-                    setCodeCheck(false);
-                  } else {
-                    alert("Please enter valid code");
-                  }
-                }}
-              >
-                Submit
-              </button>
-            </div>
-          </div>
+          </form>
           {loading()}
           {() => checkForgotEmail()}
         </>
@@ -102,7 +189,7 @@ function ForgetPass(prop) {
           <div className="button">
             <button
               onClick={() => {
-                alert("password has been changed");
+                changePassword();
                 prop.pr(false);
               }}
             >
