@@ -19,7 +19,7 @@ function ForgetPass(prop) {
     if (load) {
       return <Loader />;
     } else {
-      return <h1></h1>;
+      return <></>;
     }
   };
   const form = useRef();
@@ -100,9 +100,8 @@ function ForgetPass(prop) {
             }
           });
         });
-      }).then(()=>{
-        
-      });
+      })
+      .then(() => {});
   };
 
   const showpassword = () => {
@@ -133,7 +132,7 @@ function ForgetPass(prop) {
     if (CodeCheck) {
       return (
         <>
-          <form ref={form} onSubmit={sendEmail}>
+          <form ref={form} onSubmit={sendEmail} className="forgot_password_box">
             <div className="forgot_password_box" id="forgot_box">
               <div className="username">
                 <h4>Email</h4>
@@ -167,36 +166,38 @@ function ForgetPass(prop) {
                 <button onClick={checkCode}>Submit</button>
               </div>
             </div>
-          </form>
           {loading()}
+          </form>
           {() => checkForgotEmail()}
         </>
       );
     } else {
       return (
-        <div className="re_enter_pass">
-          <div className="password">
-            <h4>
-              New Password
-              <input type="checkbox" onClick={() => showpassword()} />
-            </h4>
-            <input
-              type="password"
-              id="newpassword"
-              onChange={(e) => setNewPassword(e.target.value.trim())}
-            />
+        <>
+          <div className="re_enter_pass">
+            <div className="password">
+              <h4>
+                New Password
+                <input type="checkbox" onClick={() => showpassword()} />
+              </h4>
+              <input
+                type="password"
+                id="newpassword"
+                onChange={(e) => setNewPassword(e.target.value.trim())}
+              />
+            </div>
+            <div className="button">
+              <button
+                onClick={() => {
+                  changePassword();
+                  prop.pr(false);
+                }}
+              >
+                Confirm
+              </button>
+            </div>
           </div>
-          <div className="button">
-            <button
-              onClick={() => {
-                changePassword();
-                prop.pr(false);
-              }}
-            >
-              Confirm
-            </button>
-          </div>
-        </div>
+        </>
       );
     }
   };
