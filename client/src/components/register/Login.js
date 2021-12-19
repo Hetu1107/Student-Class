@@ -4,11 +4,54 @@ import "../../css/register.css";
 import db from "../firebase";
 import Loader from "../Loader/Loader";
 import axios from "axios";
+import ForgetPass from "./ForgetPass";
 
 function Login(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [load, setload] = useState(false);
+  const [Forgot,setForgot] = useState(false);
+
+  const ForgotOrNot = () =>{
+    if(!Forgot){
+      return(
+        <form className="login_signup_box_select">
+        <div className="username">
+          <h4>Email</h4>
+          <input
+            type="text"
+            value={email}
+            onChange={(e) => setEmail(e.target.value.trim())}
+          />
+        </div>
+        <div className="password">
+          <h4>
+            Password
+            <input type="checkbox" onClick={() => showpassword()} />
+          </h4>
+          <input
+            type="password"
+            id="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+        <div className="button">
+          <button onClick={login}>Continue</button>
+        </div>
+        <div className="Forget-password">
+            <h3 onClick={()=>setForgot(true)}>Forgot Password</h3>
+        </div>
+        {loading()}
+      </form>
+      );
+    }
+    else{
+      return(
+        <ForgetPass pr={setForgot} co={props.logincod}/>
+        );
+      }
+  }
 
   const loading = () => {
     if (load) {
@@ -35,8 +78,6 @@ function Login(props) {
         }
       });
   };
-
-  const ForgotPassword = () => {};
 
   useEffect(() => {
     userAuthnticated();
@@ -91,33 +132,13 @@ function Login(props) {
       x.type = "password";
     }
   };
+
   return (
-    <form className="login_signup_box_select">
-      <div className="username">
-        <h4>Email</h4>
-        <input
-          type="text"
-          value={email}
-          onChange={(e) => setEmail(e.target.value.trim())}
-        />
-      </div>
-      <div className="password">
-        <h4>
-          Password
-          <input type="checkbox" onClick={() => showpassword()} />
-        </h4>
-        <input
-          type="password"
-          id="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-      </div>
-      <div className="button">
-        <button onClick={login}>Continue</button>
-      </div>
-      {loading()}
-    </form>
+    <>
+    {
+      ForgotOrNot()
+    }
+    </>
   );
 }
 

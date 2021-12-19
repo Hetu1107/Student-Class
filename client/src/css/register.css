@@ -269,6 +269,48 @@ body{
     font-family: var(--poppin);
     border-radius: 3px;
 }
+.Forget-password{
+    width: 40%;
+    height: fit-content;
+    margin: 0;
+    padding: 0;
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.Forget-password h3{
+    font-size: 12px;
+    color: red;
+    cursor: pointer;
+    font-family: var(--poppin);
+    font-weight: 400;
+    transition: opacity 200ms ease;
+}
+.Forget-password h3:hover{
+    opacity: 0.7;
+}
+.back_to_login{
+    width: 40%;
+    height: fit-content;
+    margin: 0;
+    padding: 0;
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.back_to_login h3{
+    font-size: 12px;
+    color: red;
+    cursor: pointer;
+    font-family: var(--poppin);
+    font-weight: 400;
+    transition: opacity 200ms ease;
+}
+.back_to_login h3:hover{
+    opacity: 0.7;
+}
 .button{
     width: 100%;
     height: fit-content;

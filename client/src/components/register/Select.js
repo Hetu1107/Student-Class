@@ -16,15 +16,16 @@ const footText = [
         value : "Sign-up"
     }
 ]
-const actualcode = Math.floor(100000 + Math.random() * 900000);
+const actualcode1 = Math.floor(100000 + Math.random() * 900000);
+const actualcode2 = Math.floor(200000 + Math.random() * 900000);
 function Select() {
     const [upORin,setchoose] = useState(1);
     const choose = ()=> {
         if(upORin){
-            return <Login/>
+            return <Login logincod={actualcode2}/>
         }
         else{
-            return <Signup cod = {actualcode}/>
+            return <Signup cod = {actualcode1}/>
         }
     }
     const chage = () =>{
