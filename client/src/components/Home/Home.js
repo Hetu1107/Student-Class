@@ -13,17 +13,17 @@ const socket = io('/');
 
 const data = [
     {
-        src: 'https://wallpapercave.com/wp/wp5177383.jpg',
+        src: 'https://www.czechuniversities.com/uploads/2020/05/18705.jpg',
         name: 'CSE-2020',
         batchName: 'CSE',
     },
     {
-        src: 'https://wallpaperaccess.com/full/536531.png',
+        src: 'https://wallpapercave.com/wp/wp2700096.jpg',
         name: 'ECE-2020',
         batchName: 'ECE',
     },
     {
-        src: 'https://wallpapercave.com/wp/wp3140229.jpg',
+        src: 'https://st2.depositphotos.com/3559981/6255/i/600/depositphotos_62552689-stock-photo-photo-of-man-wearing-vendetta.jpg',
         name: 'Both-Batch',
         batchName: 'COMMON',
     },

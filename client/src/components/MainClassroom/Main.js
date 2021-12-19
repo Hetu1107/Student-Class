@@ -432,7 +432,7 @@ function Main(props) {
                     {props.location.state?.userDetails.email === res?.email ||
                     props.location.state?.userDetails.email ===
                       "studentClassroom2024@gmail.com" ? (
-                      <div className="batch-main-page-middle-boxes-i del">
+                      <div className="delee">
                         <i
                           style={{ cursor: "pointer" }}
                           onClick={() => deleteAnnouncement(res)}

@@ -215,7 +215,7 @@ function NavBar(props) {
                         <ListGroup.Item
                             as="li"
                         >
-                          <div className="flex">
+                          <div className="flexd">
                             <div className="complete">{on}</div>
                             <div className="end"></div>
                           </div>

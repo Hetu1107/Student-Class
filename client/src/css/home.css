@@ -60,10 +60,14 @@
     overflow-x: hidden;
     width: 100vw;
 }
+.classroom-home-page-main-div-middle::-webkit-scrollbar{
+    width: 5px;
+}
 .classroom-home-page-main-div-middle-box{
     display: flex;
     width: 95%;
     height: 150px;
+    min-height: 150px;
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
