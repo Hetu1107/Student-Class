@@ -150,14 +150,14 @@ function ForgetPass(prop) {
                 id="actualcode_input"
               />
               <div className="button">
-                <button type="submit">Varify</button>
+                <button type="submit">Verify</button>
               </div>
               <div className="back_to_login">
                 <h3 onClick={() => prop.pr(false)}>Back to Login</h3>
               </div>
             </div>
             <div id="code_boxx">
-              <h1>Please Check Your Mail Box and Varify The Code</h1>
+              <h1>Please Check Your Mail Box and enter The Code</h1>
               <input
                 placeholder="code.."
                 onChange={(e) => setFoCode(e.target.value)}
