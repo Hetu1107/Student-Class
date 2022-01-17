@@ -26,7 +26,16 @@ function Main(props) {
   const [title, setTitle] = useState("");
 
   //   for drop down
-  const dropMenu = ["CE", "P & SA", "MPI", "CAO", "ICT", "EC", "All"];
+  let dropMenu;
+  if(props.location.state.batchName == 'CSE'){
+  dropMenu = ["CN", "DAA", "DBMS", "OOT", "OS", "SS", "All"];
+  }
+  else if(props.location.state.batchName == 'ECE'){
+    dropMenu = ["OS","CN","AC","DC","MicroCont","EM","All"];
+  }
+  else{
+    dropMenu = ["CN", "DAA", "DBMS", "OOT", "OS", "SS","AC","DC","MicroCont","EM", "All"];
+  }
   const [dropItem, setDropItem] = useState("Select Subject");
 
   // serach filters
